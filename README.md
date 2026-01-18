@@ -12,3 +12,4 @@ Adoctor's clinic can allow many doctors to treat many patients. A patient can bo
 8. When the patient makes their payment, they will need to provide their government healthID number and their health insurance details, such as the name of the provider andt he membershipID.
 
 ## Data Design 
+![clinic](clinic_design.png)
