@@ -11,3 +11,4 @@ Adoctor's clinic can allow many doctors to treat many patients. A patient can bo
 7. Anappointment has a specific price associated with it, which the patient pays after their appointment.The price depends on the doctor that was seen.
 8. When the patient makes their payment, they will need to provide their government healthID number and their health insurance details, such as the name of the provider andt he membershipID.
 
+## Data Design 
