@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clinic.Infrastructure", "Cl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clinic.Shared", "Clinic.Shared\Clinic.Shared.csproj", "{9C2043AB-BD1D-404C-B244-ABB7E9DEF6D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clinic.Application", "Clinic.Application\Clinic.Application.csproj", "{DCCAEF5E-1CD0-46E1-94FB-CE0649CCBCFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clinic.API", "Clinic.API\Clinic.API.csproj", "{49CBF7D5-7D5D-44EC-B7AB-01C0EB3FE073}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{9C2043AB-BD1D-404C-B244-ABB7E9DEF6D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C2043AB-BD1D-404C-B244-ABB7E9DEF6D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C2043AB-BD1D-404C-B244-ABB7E9DEF6D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCCAEF5E-1CD0-46E1-94FB-CE0649CCBCFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCCAEF5E-1CD0-46E1-94FB-CE0649CCBCFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCCAEF5E-1CD0-46E1-94FB-CE0649CCBCFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCCAEF5E-1CD0-46E1-94FB-CE0649CCBCFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49CBF7D5-7D5D-44EC-B7AB-01C0EB3FE073}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49CBF7D5-7D5D-44EC-B7AB-01C0EB3FE073}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49CBF7D5-7D5D-44EC-B7AB-01C0EB3FE073}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49CBF7D5-7D5D-44EC-B7AB-01C0EB3FE073}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

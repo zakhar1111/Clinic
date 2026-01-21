@@ -24,7 +24,7 @@ public static class DIExtensions
                 sql =>
                 {
                     sql.MigrationsHistoryTable("__EFMigrationsHistory", "deeds.message");
-                    sql.MigrationsAssembly("clinic.Infrastructure");
+                    sql.MigrationsAssembly("Clinic.Infrastructure");
                 }
                 )
             );
