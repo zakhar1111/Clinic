@@ -8,4 +8,6 @@ public class Patient
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string GovId { get; set; }
+
+    public List<Booking> Bookings { get; set; } = new();
 }

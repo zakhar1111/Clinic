@@ -3,6 +3,11 @@
 public class Diagnostic
 {
     public int Id { get; set; }
+
     public string Name { get; set; }
     public string TestResults { get; set; }
+
+    public int AppointmentId { get; set; }
+
+    public Appointment Appointment { get; set; }
 }
