@@ -1,0 +1,67 @@
+﻿1. Aggregates
+	- Patient
+	- Booking
+    - Appointment
+
+2. Domains flow
+
+Patient → Booking → Appointment → 
+   Notes
+   Prescriptions
+   Diagnostics
+   Payments
+
+3. Aggregate ownership
+
+Patient
+ └── Bookings (references)
+
+Doctor
+ ├── Shifts
+ └── Specialities
+
+Appointment
+ ├── Notes
+ ├── Prescriptions
+ ├── Diagnostics
+ └── Payments
+
+
+ @@@@@@@@@@@@@@@@@@@@@@@@
+
+ Your core flow is clean and correct:
+
+Patient → Booking → Appointment → 
+                            Notes
+                            Prescriptions
+                            Diagnostics
+                            Payments
+
+   @@@@@@@@@@@@@@@@@@@@@@@@
+
+@@@@@@ Relationship Overview 
+ Patient ─┐
+         ├── Booking ─── Appointment ─── Payment
+Doctor ──┘                  │
+                              └── Insurance
+
+Doctor ─── DoctorShift
+Doctor ─── Department
+
+@@@@@  Example Real Flow
+
+1️⃣ Patient books time → booking
+2️⃣ Clinic creates appointment → appointment
+3️⃣ Insurance applied → insurance
+4️⃣ Patient pays remaining amount → payment
+
+
+If you want next:
+
+Aggregate methods (AddPayment, CompleteAppointment)
+
+Domain invariants enforcement
+
+Application service layer examples
+
+EF Core repository implementations

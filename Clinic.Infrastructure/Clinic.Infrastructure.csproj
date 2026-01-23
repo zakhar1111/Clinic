@@ -19,9 +19,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Persistence\Repositories\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Clinic.Application\Clinic.Application.csproj" />
     <ProjectReference Include="..\Clinic.Domain\Clinic.Domain.csproj" />
   </ItemGroup>
 
