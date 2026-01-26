@@ -4,8 +4,7 @@ namespace Clinic.Application.Repositories;
 
 public interface IDoctorRepository 
 {
-    Task<Doctor?> GetByIdAsync(int id);
-    Task AddAsync(Doctor doctor);
-    Task UpdateAsync(Doctor doctor);
-    Task DeleteAsync(Doctor doctor);
+    Task<Doctor?> GetByIdAsync(int id, CancellationToken ct);
+    Task AddAsync(Doctor doctor, CancellationToken ct);
+    Task SaveAsync(Doctor doctor, CancellationToken ct);
 }

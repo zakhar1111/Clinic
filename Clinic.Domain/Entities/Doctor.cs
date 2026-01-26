@@ -1,4 +1,5 @@
-﻿namespace Clinic.Domain.Entities;
+﻿
+namespace Clinic.Domain.Entities;
 
 public class Doctor
 {

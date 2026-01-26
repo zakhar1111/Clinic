@@ -65,3 +65,14 @@ Domain invariants enforcement
 Application service layer examples
 
 EF Core repository implementations
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+Service:
+  - orchestrates use case
+
+Aggregate:
+  - validates & mutates state
+
+Repository:
+  - loads & commits aggregate
