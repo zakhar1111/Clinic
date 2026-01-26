@@ -10,9 +10,4 @@ public class Patient
     public string GovId { get; set; }
 
     public List<Booking> Bookings { get; set; } = new();
-
-    public void Update(Patient patient)
-    {
-        throw new NotImplementedException();
-    }
 }

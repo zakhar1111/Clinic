@@ -20,8 +20,4 @@ public class Appointment
     public List<Diagnostic> Diagnostics { get; set; } = new();
     public List<Payment> Payments { get; set; } = new();
 
-    public void Update(Appointment appointment)
-    {
-        throw new NotImplementedException();
-    }
 }

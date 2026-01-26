@@ -17,14 +17,8 @@ public class AppointmentRepository(ClinicDbContext context)
         await _context.SaveChangesAsync(ct);
     }
 
-    public async Task DeleteAsync(Appointment appointment, CancellationToken ct)
+    public async Task SaveAsync(Appointment appointment, CancellationToken ct)
     {
-        var toDelete = await _context
-            .Set<Appointment>()
-            .FindAsync(appointment.Id,ct) ??
-            throw new KeyNotFoundException(nameof(appointment));
-
-        _context.Remove(toDelete);
         await _context.SaveChangesAsync(ct);
     }
 
@@ -32,15 +26,4 @@ public class AppointmentRepository(ClinicDbContext context)
         await _context
             .Set<Appointment>()
             .FindAsync(id, ct);
-
-    public async Task UpdateAsync(Appointment appointment, CancellationToken ct)
-    {
-        var toUpdate = await _context
-            .Set<Appointment>()
-            .FindAsync(appointment.Id, ct) ??
-            throw new KeyNotFoundException(nameof(appointment));
-
-        toUpdate.Update(appointment);
-        await _context.SaveChangesAsync(ct);
-    }
 }
