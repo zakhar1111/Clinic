@@ -1,4 +1,5 @@
-﻿namespace Clinic.Domain.Entities;
+﻿
+namespace Clinic.Domain.Entities;
 
 public class Appointment
 {
@@ -18,4 +19,9 @@ public class Appointment
     public List<Prescription> Prescriptions { get; set; } = new();
     public List<Diagnostic> Diagnostics { get; set; } = new();
     public List<Payment> Payments { get; set; } = new();
+
+    public void Update(Appointment appointment)
+    {
+        throw new NotImplementedException();
+    }
 }

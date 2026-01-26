@@ -4,8 +4,8 @@ namespace Clinic.Application.Repositories;
 
 public interface IAppointmentRepository 
 {
-    Task<Appointment?> GetByIdAsync(int id);
-    Task AddAsync(Appointment appointment);
-    Task UpdateAsync(Appointment appointment);
-    Task DeleteAsync(Appointment appointment);
+    Task<Appointment?> GetByIdAsync(int id, CancellationToken ct);
+    Task AddAsync(Appointment appointment, CancellationToken ct);
+    Task UpdateAsync(Appointment appointment, CancellationToken ct);
+    Task DeleteAsync(Appointment appointment, CancellationToken ct);
 }

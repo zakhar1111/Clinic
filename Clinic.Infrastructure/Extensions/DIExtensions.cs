@@ -32,6 +32,7 @@ public static class DIExtensions
             );
 
         services.AddScoped<IPatientRepository, PatientRepository>();
+        services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 
         return services;
     }
