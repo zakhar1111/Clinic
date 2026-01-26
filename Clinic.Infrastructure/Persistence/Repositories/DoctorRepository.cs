@@ -1,5 +1,6 @@
 ﻿using Clinic.Application.Repositories;
 using Clinic.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Clinic.Infrastructure.Persistence.Repositories;
 
@@ -21,7 +22,8 @@ public class DoctorRepository(ClinicDbContext context)
     public async Task<Doctor?> GetByIdAsync(int id, CancellationToken ct) =>
         await _context
             .Set<Doctor>()
-            .FindAsync(id, ct);
+            .Include(d => d.Bookings)
+            .FirstOrDefaultAsync(d => d.Id == id, ct);
 
     public async Task SaveAsync(Doctor doctor, CancellationToken ct) =>
         await _context.SaveChangesAsync(ct);

@@ -1,5 +1,6 @@
 ﻿using Clinic.Application.Repositories;
 using Clinic.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Numerics;
 
 namespace Clinic.Infrastructure.Persistence.Repositories;
@@ -21,5 +22,6 @@ public class PatientRepository(ClinicDbContext context)
     public async Task<Patient?> GetByIdAsync(int id, CancellationToken ct) =>
         await _context
             .Set<Patient>()
-            .FindAsync(new object?[] { id }, ct);
+            .Include(p => p.Bookings)
+            .FirstOrDefaultAsync(p => p.Id == id, ct);
 }
