@@ -20,4 +20,52 @@ public class Appointment
     public List<Diagnostic> Diagnostics { get; set; } = new();
     public List<Payment> Payments { get; set; } = new();
 
+    public void AddNote(string content)
+    {
+        Notes.Add(new Note
+        {
+            Text = content,
+            CreatedAt = DateTime.UtcNow,
+            AppointmentId = this.Id,
+            Appointment = this
+        });
+    }
+
+    public void AddPrescription(string medicine, string dosage, string frequency)
+    {
+        Prescriptions.Add(new Prescription
+        {
+            Medicine = medicine,
+            Dosage = dosage,
+            Frequency = frequency,
+            CreatedAt = DateTime.UtcNow,
+            AppointmentId = this.Id,
+            Appointment = this
+        });
+    }
+
+    public void AddDiagnostic(string testName, string results)
+    {
+        Diagnostics.Add(new Diagnostic
+        {
+            Name = testName,
+            TestResults = results,
+            AppointmentId = this.Id,
+            Appointment = this
+        });
+    }
+
+    public void AddPayment(decimal amount, int payMethod)
+    {
+        Payments.Add(new Payment
+        {
+            Amount = amount,
+            PayTypeId = payMethod,
+            PayStatusId = 1, // Waiting
+            PaidAt = DateTime.UtcNow,
+            AppointmentId = this.Id,
+            Appointment = this
+        });
+    }
+
 }
