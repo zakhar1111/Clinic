@@ -15,7 +15,6 @@ public class AppointmentRepository(ClinicDbContext context)
             throw new ArgumentNullException(nameof(appointment));
 
         await _context.Set<Appointment>().AddAsync(appointment, ct);
-        await _context.SaveChangesAsync(ct);
     }
 
     public async Task SaveAsync(Appointment appointment, CancellationToken ct)

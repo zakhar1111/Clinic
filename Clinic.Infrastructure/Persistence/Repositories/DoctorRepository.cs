@@ -14,7 +14,6 @@ public class DoctorRepository(ClinicDbContext context)
         ArgumentNullException.ThrowIfNull(doctor);
 
         await _context.Set<Doctor>().AddAsync(doctor, ct);
-        await _context.SaveChangesAsync(ct);
     }
 
 
