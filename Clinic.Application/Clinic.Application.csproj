@@ -15,4 +15,9 @@
     <ProjectReference Include="..\Clinic.Shared\Clinic.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Doctor\" />
+    <Folder Include="Features\Patient\" />
+  </ItemGroup>
+
 </Project>

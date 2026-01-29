@@ -67,5 +67,27 @@ public class Appointment
             Appointment = this
         });
     }
+    
+    public void MarkAsPaid()
+    {
+        AppointmentStatusId = 2;// Paid
+        AppointmentStatus = new AppointmentStatus { Id = AppointmentStatusId };
+    }
 
+    public void Cancel()
+    {
+        AppointmentStatusId = 3;// Canceled
+        AppointmentStatus = new AppointmentStatus { Id = AppointmentStatusId };
+    }
+
+    public void ApplyInsurance(Insurance insurance)
+    {
+        InsuranceId = insurance.Id;
+        Insurance = insurance;
+    }
+
+    public decimal CalculateTotalPayments()
+    {
+        return Payments.Sum(p => p.Amount);
+    }
 }
