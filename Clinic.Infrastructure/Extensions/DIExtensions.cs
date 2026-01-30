@@ -1,6 +1,8 @@
 ﻿using Clinic.Application.Repositories;
+using Clinic.Application.Services;
 using Clinic.Infrastructure.Persistence;
 using Clinic.Infrastructure.Persistence.Repositories;
+using Clinic.Infrastructure.Persistence.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +36,8 @@ public static class DIExtensions
         services.AddScoped<IPatientRepository, PatientRepository>();
         services.AddScoped<IAppointmentRepository, AppointmentRepository>();
         services.AddScoped<IDoctorRepository, DoctorRepository>();
+
+        services.AddScoped<IAppointmentQueryService, AppointmentQueryService>();
 
         return services;
     }

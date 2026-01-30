@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Doctor\" />
     <Folder Include="Features\Patient\" />
   </ItemGroup>
 
