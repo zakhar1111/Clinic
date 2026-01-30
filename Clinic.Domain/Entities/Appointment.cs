@@ -22,6 +22,10 @@ public class Appointment
 
     public void AddNote(string content)
     {
+        if (this.AppointmentStatusId == 3) // Cancelled
+            throw new InvalidOperationException(
+                "Cannot add notes to a cancelled appointment");
+
         Notes.Add(new Note
         {
             Text = content,
@@ -74,6 +78,12 @@ public class Appointment
         AppointmentStatus = new AppointmentStatus { Id = AppointmentStatusId };
     }
 
+    public void MarkAsCompleted()
+    {
+        AppointmentStatusId = 4;// Completed
+        AppointmentStatus = new AppointmentStatus { Id = AppointmentStatusId };
+    }
+
     public void Cancel()
     {
         AppointmentStatusId = 3;// Canceled
@@ -90,4 +100,5 @@ public class Appointment
     {
         return Payments.Sum(p => p.Amount);
     }
+
 }
