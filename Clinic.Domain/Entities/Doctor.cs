@@ -15,6 +15,9 @@ public class Doctor
 
     public void AddSpeciality(int specialityId)
     {
+        if (Specialities.Any(s => s.SpecialityId == specialityId))
+            throw new InvalidOperationException("Speciality already exists");
+
         Specialities.Add(new DoctorSpeciality
         {
             DoctorId = this.Id,
@@ -24,6 +27,9 @@ public class Doctor
 
     public void AddShift(TimeSpan start, int slot)
     {
+        if (Shifts.Any(s => s.StartTime == start))
+            throw new InvalidOperationException("Shift already exists");
+
         Shifts.Add(new Shift
         {
             DoctorId = this.Id,

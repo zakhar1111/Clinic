@@ -51,9 +51,44 @@ Doctor ─── Department
 @@@@@  Example Real Flow
 
 1️⃣ Patient books time → booking
+    - check if doctor is available
+    - add booking to patient
+    - notify clinic
+    - reserve slot in doctor's schedule
+    - notify doctor
+    - send confirmation to patient
+    - etc.
+
 2️⃣ Clinic creates appointment → appointment
-3️⃣ Insurance applied → insurance
-4️⃣ Patient pays remaining amount → payment
+    - link booking to appointment
+    - set appointment details (time, doctor, reason)
+    - notify patient of appointment creation
+    - prepare appointment resources (room, equipment)
+    - etc.
+
+3️⃣ Doctor provides service → notes, prescriptions, diagnostics
+    - record doctor's notes
+    - create prescriptions if needed
+    - order diagnostics tests if required
+    - update appointment status
+    - notify patient of follow-up actions
+    - etc.
+
+40 Clinic provide serviceInsurance applied → insurance
+    - check patient's insurance validity
+    - apply insurance to appointment
+    - calculate coverage
+    - update appointment cost
+    - notify patient of coverage details
+    - etc.
+
+50 - OK  Patient pays remaining amount → payment
+    - calculate remaining balance
+    - process payment
+    - update appointment status
+    - send receipt to patient
+    - notify clinic of payment
+    - etc.
 
 
 If you want next:
