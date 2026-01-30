@@ -12,4 +12,23 @@ public class Doctor
     public List<Booking> Bookings { get; set; } = new();
     public List<DoctorSpeciality> Specialities { get; set; } = new();
     public List<Shift> Shifts { get; set; } = new();
+
+    public void AddSpeciality(int specialityId)
+    {
+        Specialities.Add(new DoctorSpeciality
+        {
+            DoctorId = this.Id,
+            SpecialityId = specialityId
+        });
+    }
+
+    public void AddShift(TimeSpan start, int slot)
+    {
+        Shifts.Add(new Shift
+        {
+            DoctorId = this.Id,
+            StartTime = start,
+            Slot15Min = slot
+        });
+    }
 }
