@@ -38,6 +38,7 @@ public static class DIExtensions
         services.AddScoped<IDoctorRepository, DoctorRepository>();
 
         services.AddScoped<IAppointmentQueryService, AppointmentQueryService>();
+        services.AddScoped<IDoctorAvailabilityService, DoctorAvailabilityService>();
 
         return services;
     }

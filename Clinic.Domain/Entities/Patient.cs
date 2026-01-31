@@ -10,16 +10,17 @@ public class Patient
     public string GovId { get; set; }
 
     public List<Booking> Bookings { get; set; } = new();
-    public void BookAppontment(DateTime time, int doctorId)
+    public Booking BookAppontment(DateTime time, int doctorId, int duration)
     {
-        bool doctorAvailable = true;
-        if(doctorAvailable)
-            Bookings.Add( new Booking 
-            { 
-                OnDate = time,
-                DoctorId = doctorId,
-                PatientId = this.Id,
-                BookingStatusId = 1 // Pending
-            });
+        var newBooking = new Booking
+        {
+            OnDate = time,
+            DoctorId = doctorId,
+            PatientId = this.Id,
+            DurationIn15MinSlots = duration,
+            BookingStatusId = 1 // Scheduled
+        };
+        Bookings.Add(newBooking);
+        return newBooking;
     }
 }

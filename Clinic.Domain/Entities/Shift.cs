@@ -1,5 +1,8 @@
 ﻿namespace Clinic.Domain.Entities;
 
+// Shift
+// - defines capacity, not current state.
+// - stays immutable during the day.
 public class Shift
 {
     public int Id { get; set; }

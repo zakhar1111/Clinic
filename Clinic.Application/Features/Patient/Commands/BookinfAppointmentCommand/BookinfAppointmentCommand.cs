@@ -8,4 +8,5 @@ public class BookinfAppointmentCommand
     public int PatientId { get; set; }
     public int DoctorId { get; set; }
     public DateTime OnDate { get; set; }
+    public int DurationInSlots { get; set; }
 }
