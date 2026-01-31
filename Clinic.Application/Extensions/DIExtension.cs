@@ -1,6 +1,7 @@
 ﻿using Clinic.Application.Features.Appointment.Commands.PayForAppointmentCommand;
 using Clinic.Application.Features.Doctor.Commands.AddDoctorShiftCommand;
 using Clinic.Application.Features.Doctor.Commands.AddDoctorSpecialityCommand;
+using Clinic.Application.Features.Doctor.Queries.GetAppointmentByDateQuery;
 using Clinic.Application.Features.Patient.Commands.BookinfAppointmentCommand;
 using Clinic.Shared.Messaging;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +18,7 @@ public static class DIExtension
         
         services.AddScoped<IOperationHandler<AddDoctorSpecialityCommand, int>, AddDoctorSpecialityHandler>();
         services.AddScoped<IOperationHandler<AddDoctorShiftCommand, int>, AddDoctorShiftHandler>();
+        services.AddScoped<IOperationHandler<GetAppointmentByDateQuery, List<AppointmentSummaryDto>>, GetAppointmentByDateHandler>();
 
         services.AddScoped<IOperationHandler<BookinfAppointmentCommand, int>, BookingAppointmentHandler>();
 
