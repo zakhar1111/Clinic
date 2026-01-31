@@ -20,6 +20,24 @@ public class Appointment
     public List<Diagnostic> Diagnostics { get; set; } = new();
     public List<Payment> Payments { get; set; } = new();
 
+    public static Appointment Create(
+        Booking booking, 
+        decimal price, 
+        Insurance? insurance, 
+        string currency
+        )
+    {
+        return new Appointment
+        { 
+            Booking = booking,
+            AppointmentStatusId = 1, // Scheduled
+            InsuranceId = insurance?.Id,
+            Insurance = insurance,
+            Price = price,
+            Currency = currency
+        };
+    }
+
     public void AddNote(string content)
     {
         if (this.AppointmentStatusId == 3) // Cancelled
