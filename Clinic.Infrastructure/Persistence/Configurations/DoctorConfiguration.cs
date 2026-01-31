@@ -11,6 +11,9 @@ public class DoctorConfiguration
     {
         builder.HasKey(d => d.Id);
 
+        builder.Property(x => x.Id)
+            .ValueGeneratedOnAdd();
+
         builder.Property(d => d.Name)
             .IsRequired()
             .HasMaxLength(50);

@@ -11,6 +11,9 @@ public class SpecialityConfiguration
     {
         builder.HasKey(s => s.Id);
 
+        builder.Property(x => x.Id)
+            .ValueGeneratedOnAdd();
+
         builder.Property(s => s.Name)
             .IsRequired()
             .HasMaxLength(50);

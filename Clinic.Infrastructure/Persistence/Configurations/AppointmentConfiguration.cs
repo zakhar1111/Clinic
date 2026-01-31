@@ -11,6 +11,9 @@ public class AppointmentConfiguration
     {
         builder.HasKey(a => a.Id);
 
+        builder.Property(x => x.Id)
+            .ValueGeneratedOnAdd();
+
         builder.Property(a => a.Price).IsRequired().HasColumnType("decimal(18,2)");
         builder.Property(a => a.Currency).IsRequired().HasMaxLength(3);
         builder.Property(a => a.BookingId).IsRequired();
@@ -40,6 +43,9 @@ public class DiagnosticConfiguration
     {
         builder.HasKey(d => d.Id);
 
+        builder.Property(x => x.Id)
+            .ValueGeneratedOnAdd();
+
         builder.Property(d => d.AppointmentId).IsRequired();
         builder.Property(d => d.Name).IsRequired()
             .HasMaxLength(50);
@@ -59,6 +65,9 @@ public class PrescriptionConfiguration
     public void Configure(EntityTypeBuilder<Prescription> builder)
     {
         builder.HasKey(p => p.Id);
+
+        builder.Property(x => x.Id)
+            .ValueGeneratedOnAdd();
 
         builder.Property(p => p.AppointmentId)
             .IsRequired();
@@ -89,7 +98,10 @@ public class NoteConfiguration
     public void Configure(EntityTypeBuilder<Note> builder)
     {
         builder.HasKey(n => n.Id);
-        
+
+        builder.Property(x => x.Id)
+            .ValueGeneratedOnAdd();
+
         builder.Property(n => n.CreatedAt).IsRequired();
         builder.Property(n => n.Text).HasMaxLength(1000);
 
@@ -107,6 +119,10 @@ public class InsuranceConfiguration
     public void Configure(EntityTypeBuilder<Insurance> builder)
     {
         builder.HasKey(i => i.Id);
+
+        builder.Property(x => x.Id)
+            .ValueGeneratedOnAdd();
+
         builder.Property(i => i.Provider)
             .IsRequired()
             .HasMaxLength(50);
@@ -124,5 +140,12 @@ public class AppointmentStatusConfiguration
         builder.Property(a => a.Name)
             .IsRequired()
             .HasMaxLength(50);
+
+        builder.HasData(
+                new AppointmentStatus { Id = 1, Name = "Scheduled" },
+                new AppointmentStatus { Id = 2, Name = "Paid" },
+                new AppointmentStatus { Id = 3, Name = "Cancelled" },
+                new AppointmentStatus { Id = 4, Name = "Completed" }
+        );
     }
 }

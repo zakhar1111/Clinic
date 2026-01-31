@@ -11,6 +11,9 @@ public class PaymentConfiguration
     {
         builder.HasKey(p => p.Id);
 
+        builder.Property(x => x.Id)
+            .ValueGeneratedOnAdd();
+
         builder.Property(p => p.Amount)
             .IsRequired()
             .HasColumnType("decimal(18,2)");

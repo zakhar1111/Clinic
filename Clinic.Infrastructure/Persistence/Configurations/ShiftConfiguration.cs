@@ -11,9 +11,12 @@ public class ShiftConfiguration
     {
         builder.HasKey(s => s.Id);
 
+        builder.Property(x => x.Id)
+            .ValueGeneratedOnAdd();
+
         builder.Property(s => s.DoctorId).IsRequired();
         builder.Property(s => s.StartTime).IsRequired();
         builder.Property(s => s.Slot15Min).IsRequired();
-
+        builder.Property(s => s.Day).IsRequired();
     }
 }

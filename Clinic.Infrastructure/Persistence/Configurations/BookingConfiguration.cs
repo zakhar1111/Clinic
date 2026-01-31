@@ -11,12 +11,15 @@ public class BookingConfiguration
     {
         builder.HasKey(b => b.Id);
 
+        builder.Property(x => x.Id)
+            .ValueGeneratedOnAdd();
+
         builder.Property(b => b.OnDate)
             .IsRequired();
 
         builder.Property(b => b.BookingStatusId)
             .IsRequired();
-        builder.Property(b => b.Slot15Min)
+        builder.Property(b => b.DurationIn15MinSlots)
             .IsRequired();
 
         builder.HasOne<Patient>()

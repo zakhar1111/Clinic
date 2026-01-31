@@ -11,6 +11,9 @@ public class DoctorSpecialityConfiguration
     {
         builder.HasKey(x => x.Id);
 
+        builder.Property(x => x.Id)
+            .ValueGeneratedOnAdd();
+
         builder.Property(x => x.DoctorId).IsRequired();
         builder.Property(x => x.SpecialityId).IsRequired();
 
