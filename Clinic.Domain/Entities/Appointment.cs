@@ -53,9 +53,12 @@ public class Appointment
         });
     }
 
-    public void AddPrescription(string medicine, string dosage, string frequency)
+    public Prescription AddPrescription(
+        string medicine, 
+        string dosage, 
+        string frequency)
     {
-        Prescriptions.Add(new Prescription
+        var prescription = new Prescription
         {
             Medicine = medicine,
             Dosage = dosage,
@@ -63,7 +66,10 @@ public class Appointment
             CreatedAt = DateTime.UtcNow,
             AppointmentId = this.Id,
             Appointment = this
-        });
+        };
+
+        Prescriptions.Add(prescription);
+        return prescription;
     }
 
     public void AddDiagnostic(string testName, string results)
