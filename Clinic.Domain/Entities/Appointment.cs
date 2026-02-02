@@ -22,15 +22,29 @@ public class Appointment
 
     public static Appointment Create(
         Booking booking, 
-        decimal price, 
-        Insurance? insurance, 
-        string currency
+        decimal price,
+        string currency,
+        Insurance? insurance = null
         )
     {
+        if (booking == null)
+            throw new ArgumentNullException(nameof(booking));
+
+        if (price < 0)
+            throw new ArgumentOutOfRangeException(nameof(price));
+
+        if (booking.BookingStatusId !=  2) // Confirmed
+            throw new InvalidOperationException(
+                "Appointment can only be created from a confirmed booking.");
+
         return new Appointment
         { 
             Booking = booking,
             AppointmentStatusId = 1, // Scheduled
+            AppointmentStatus = new AppointmentStatus
+            {
+                Id = 1, // Scheduled
+            },
             InsuranceId = insurance?.Id,
             Insurance = insurance,
             Price = price,

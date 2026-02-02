@@ -6,10 +6,12 @@ namespace Clinic.Application.Features.Patient.Commands.BookinfAppointmentCommand
 
 public class BookingAppointmentHandler(
     IPatientRepository patientRepository,
+    IAppointmentRepository appointmentRepository,
     IDoctorAvailabilityService doctorAvailabilityService)
     : IOperationHandler<BookinfAppointmentCommand, int>
 {
     private readonly IPatientRepository _patientRepository = patientRepository;
+    private readonly IAppointmentRepository _appointmentRepository = appointmentRepository;
     private readonly IDoctorAvailabilityService _doctorAvailabilityService = doctorAvailabilityService;
 
     public async Task<int> HandleAsync(BookinfAppointmentCommand request, CancellationToken ct = default)
@@ -34,6 +36,17 @@ public class BookingAppointmentHandler(
             );
 
         await _patientRepository.SaveAsync(patient, ct);
-        return newBooking.Id;
+        //return newBooking.Id;
+
+        var appointment = Clinic.Domain.Entities.Appointment.Create(
+            newBooking,
+            request.Price,
+            request.Currency,
+            null
+            );
+
+        await _appointmentRepository.AddAsync(appointment, ct);
+
+        return appointment.Id;
     }
 }

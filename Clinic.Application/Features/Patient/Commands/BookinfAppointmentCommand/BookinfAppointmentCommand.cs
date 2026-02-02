@@ -9,4 +9,6 @@ public class BookinfAppointmentCommand
     public int DoctorId { get; set; }
     public DateTime OnDate { get; set; }
     public int DurationInSlots { get; set; }
+    public decimal Price { get; set; }
+    public string Currency { get; set; }
 }
