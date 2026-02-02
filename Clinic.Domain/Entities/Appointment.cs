@@ -58,6 +58,10 @@ public class Appointment
         string dosage, 
         string frequency)
     {
+        if(this.AppointmentStatusId == 3) // Cancelled
+            throw new InvalidOperationException(
+                "Cannot add prescriptions to a cancelled appointment");
+
         var prescription = new Prescription
         {
             Medicine = medicine,

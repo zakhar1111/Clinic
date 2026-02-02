@@ -17,11 +17,7 @@ public class AddPrescriptionHandler(
             ?? throw new UnauthorizedAccessException(
                 "Appointment not found for this doctor.");
 
-        if (appointment.AppointmentStatusId !=  1) //Scheduled 
-            throw new InvalidOperationException(
-                "Cannot add prescription to this appointment state.");
-
-        var prescription = appointment.AddPrescription(
+       var prescription = appointment.AddPrescription(
             request.Medication,
             request.Dosage,
             request.Instructions);
