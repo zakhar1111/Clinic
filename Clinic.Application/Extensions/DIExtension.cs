@@ -1,6 +1,7 @@
 ﻿using Clinic.Application.Features.Appointment.Commands.PayForAppointmentCommand;
 using Clinic.Application.Features.Doctor.Commands.AddDoctorShiftCommand;
 using Clinic.Application.Features.Doctor.Commands.AddDoctorSpecialityCommand;
+using Clinic.Application.Features.Doctor.Commands.AddNoteCommand;
 using Clinic.Application.Features.Doctor.Commands.AddPrescriptionCommand;
 using Clinic.Application.Features.Doctor.Queries.GetAppointmentByDateQuery;
 using Clinic.Application.Features.Patient.Commands.BookinfAppointmentCommand;
@@ -21,6 +22,7 @@ public static class DIExtension
         services.AddScoped<IOperationHandler<AddDoctorShiftCommand, int>, AddDoctorShiftHandler>();
         services.AddScoped<IOperationHandler<GetAppointmentByDateQuery, List<AppointmentSummaryDto>>, GetAppointmentByDateHandler>();
         services.AddScoped<IOperationHandler<AddPrescriptionCommand, int>, AddPrescriptionHandler>();
+        services.AddScoped<IOperationHandler<AddNoteCommand, int>, AddNoteHandler>();
 
         services.AddScoped<IOperationHandler<BookinfAppointmentCommand, int>, BookingAppointmentHandler>();
 

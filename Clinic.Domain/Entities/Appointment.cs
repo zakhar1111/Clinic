@@ -38,19 +38,22 @@ public class Appointment
         };
     }
 
-    public void AddNote(string content)
+    public Note AddNote(string content)
     {
         if (this.AppointmentStatusId == 3) // Cancelled
             throw new InvalidOperationException(
                 "Cannot add notes to a cancelled appointment");
 
-        Notes.Add(new Note
+        var newNote = new Note
         {
             Text = content,
             CreatedAt = DateTime.UtcNow,
             AppointmentId = this.Id,
             Appointment = this
-        });
+        };
+
+        Notes.Add(newNote);
+        return newNote;
     }
 
     public Prescription AddPrescription(
