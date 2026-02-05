@@ -79,6 +79,16 @@ public class Appointment
             throw new InvalidOperationException(
                 "Cannot add prescriptions to a cancelled appointment");
 
+        if(string.IsNullOrWhiteSpace(medicine))
+            throw new ArgumentException(
+                "Medicine name cannot be empty", nameof(medicine));
+        if (string.IsNullOrWhiteSpace(dosage))
+            throw new ArgumentException(
+                "Dosage cannot be empty", nameof(dosage));
+        if (string.IsNullOrWhiteSpace(frequency))
+            throw new ArgumentException(
+                "Frequency cannot be empty", nameof(frequency));
+
         var prescription = new Prescription
         {
             Medicine = medicine,
@@ -93,15 +103,28 @@ public class Appointment
         return prescription;
     }
 
-    public void AddDiagnostic(string testName, string results)
+    public Diagnostic AddDiagnostic(string testName, string results)
     {
-        Diagnostics.Add(new Diagnostic
+        if (this.AppointmentStatusId == 3) // Cancelled
+            throw new InvalidOperationException(
+                "Cannot add diagnostic to a cancelled appointment");
+        if (string.IsNullOrWhiteSpace(testName))
+            throw new ArgumentException(
+                "Test name cannot be empty", nameof(testName));
+
+        if (string.IsNullOrWhiteSpace(results))
+            throw new ArgumentException(
+                "Test results cannot be empty", nameof(results));
+
+        var newDiagnostic = new Diagnostic
         {
             Name = testName,
             TestResults = results,
             AppointmentId = this.Id,
             Appointment = this
-        });
+        };
+        Diagnostics.Add(newDiagnostic);
+        return newDiagnostic;
     }
 
     public void AddPayment(decimal amount, int payMethod)
