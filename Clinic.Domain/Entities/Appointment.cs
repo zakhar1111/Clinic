@@ -158,10 +158,11 @@ public class Appointment
         AppointmentStatus = new AppointmentStatus { Id = AppointmentStatusId };
     }
 
-    public void ApplyInsurance(Insurance insurance)
+    public Insurance ApplyInsurance(string provider, int coverage)
     {
-        InsuranceId = insurance.Id;
-        Insurance = insurance;
+        Insurance = Insurance.Create(provider, coverage);
+        InsuranceId = Insurance.Id;
+        return Insurance;
     }
 
     public decimal CalculateTotalPayments()

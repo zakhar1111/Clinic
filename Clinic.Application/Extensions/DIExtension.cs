@@ -5,6 +5,7 @@ using Clinic.Application.Features.Doctor.Commands.AddDoctorSpecialityCommand;
 using Clinic.Application.Features.Doctor.Commands.AddNoteCommand;
 using Clinic.Application.Features.Doctor.Commands.AddPrescriptionCommand;
 using Clinic.Application.Features.Doctor.Queries.GetAppointmentByDateQuery;
+using Clinic.Application.Features.Patient.Commands.AttachInsuranceCommand;
 using Clinic.Application.Features.Patient.Commands.BookinfAppointmentCommand;
 using Clinic.Shared.Messaging;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +28,7 @@ public static class DIExtension
         services.AddScoped<IOperationHandler<AddDiagnosticCommand, int>, AddDiagnosticHandler>();
 
         services.AddScoped<IOperationHandler<BookinfAppointmentCommand, int>, BookingAppointmentHandler>();
+        services.AddScoped<IOperationHandler<AttachInsuranceCommand, int>, AttachInsuranceHandler>();
 
         return services;
     }
