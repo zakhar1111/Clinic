@@ -160,6 +160,10 @@ public class Appointment
 
     public Insurance ApplyInsurance(string provider, int coverage)
     {
+        if(AppointmentStatusId != 1) // Scheduled
+            throw new InvalidOperationException(
+                "Insurance can only be attached to scheduled appointments.");
+
         Insurance = Insurance.Create(provider, coverage);
         InsuranceId = Insurance.Id;
         return Insurance;
