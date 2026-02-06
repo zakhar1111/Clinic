@@ -20,7 +20,6 @@ public class PayForAppointmentHandler(IAppointmentRepository repo)
 
         // 2. Execute business logic (inside aggregate)
         appointment.AddPayment(request.Amount, request.PayTypeId);
-        appointment.MarkAsPaid();
 
         // 3. Persist aggregate
         await _repo.SaveAsync(appointment, ct);

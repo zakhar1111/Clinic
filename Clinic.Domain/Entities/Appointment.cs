@@ -102,12 +102,19 @@ public class Appointment
         Prescriptions.Add(prescription);
         return prescription;
     }
-
+    private void EnsureInProgress()
+    {
+        if (AppointmentStatusId != 2) // InProgress
+        {
+            throw new InvalidOperationException(
+                "Operation allowed only when appointment is active = InProgress.");
+        }
+    }
     public Diagnostic AddDiagnostic(string testName, string results)
     {
-        if (this.AppointmentStatusId == 3) // Cancelled
-            throw new InvalidOperationException(
-                "Cannot add diagnostic to a cancelled appointment");
+        if (AppointmentStatusId == 2)
+            Start();
+
         if (string.IsNullOrWhiteSpace(testName))
             throw new ArgumentException(
                 "Test name cannot be empty", nameof(testName));
@@ -115,6 +122,8 @@ public class Appointment
         if (string.IsNullOrWhiteSpace(results))
             throw new ArgumentException(
                 "Test results cannot be empty", nameof(results));
+
+        EnsureInProgress();
 
         var newDiagnostic = new Diagnostic
         {
@@ -129,9 +138,11 @@ public class Appointment
 
     public Payment AddPayment(decimal amount, int payMethod)
     {
-        if (this.AppointmentStatusId == 1) // Scheduled
-            throw new InvalidOperationException(
-                "Payments can only be added to scheduled appointments.");
+        EnsureInProgress();
+
+        if (amount < 0)
+            throw new ArgumentOutOfRangeException(
+                nameof(amount), "Payment amount must be positive.");
 
         var payment = new Payment
         {
@@ -146,13 +157,11 @@ public class Appointment
         Payments.Add(payment);
         return payment;
     }
-    
-    public void MarkAsPaid()
+    public void Start()
     {
-        AppointmentStatusId = 2;// Paid
-        AppointmentStatus = new AppointmentStatus { Id = AppointmentStatusId };
+        AppointmentStatusId = 2; //InProgress
+        AppointmentStatus = new AppointmentStatus { Id = this.Id, Name = "InProgress" };
     }
-
     public void MarkAsCompleted()
     {
         AppointmentStatusId = 4;// Completed
