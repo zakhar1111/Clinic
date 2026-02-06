@@ -7,7 +7,7 @@ public class AppointmentStatus
 }
 
 // - Scheduled
-// - Paid
+// - InProgress
 // - Cancelled
 // - Completed
 // - 

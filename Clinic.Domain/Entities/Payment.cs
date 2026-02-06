@@ -14,4 +14,6 @@ public class Payment
     public Appointment Appointment { get; set; }
     public PayType PayType { get; set; }
     public PayStatus PayStatus { get; set; }
+
+
 }

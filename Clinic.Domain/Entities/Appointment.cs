@@ -127,9 +127,13 @@ public class Appointment
         return newDiagnostic;
     }
 
-    public void AddPayment(decimal amount, int payMethod)
+    public Payment AddPayment(decimal amount, int payMethod)
     {
-        Payments.Add(new Payment
+        if (this.AppointmentStatusId == 1) // Scheduled
+            throw new InvalidOperationException(
+                "Payments can only be added to scheduled appointments.");
+
+        var payment = new Payment
         {
             Amount = amount,
             PayTypeId = payMethod,
@@ -137,7 +141,10 @@ public class Appointment
             PaidAt = DateTime.UtcNow,
             AppointmentId = this.Id,
             Appointment = this
-        });
+        };
+
+        Payments.Add(payment);
+        return payment;
     }
     
     public void MarkAsPaid()
