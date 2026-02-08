@@ -140,7 +140,7 @@ public class Appointment
     {
         EnsureInProgress();
 
-        if (amount < 0)
+        if (amount <= 0)
             throw new ArgumentOutOfRangeException(
                 nameof(amount), "Payment amount must be positive.");
 
@@ -155,6 +155,9 @@ public class Appointment
         };
 
         Payments.Add(payment);
+
+        if (IsFullyPaid()) MarkAsCompleted();
+
         return payment;
     }
     public void Start()
@@ -162,10 +165,10 @@ public class Appointment
         AppointmentStatusId = 2; //InProgress
         AppointmentStatus = new AppointmentStatus { Id = this.Id, Name = "InProgress" };
     }
-    public void MarkAsCompleted()
+    private void MarkAsCompleted()
     {
         AppointmentStatusId = 4;// Completed
-        AppointmentStatus = new AppointmentStatus { Id = AppointmentStatusId };
+        AppointmentStatus = new AppointmentStatus { Id = AppointmentStatusId, Name = "Completed" };
     }
 
     public void Cancel()
@@ -189,5 +192,8 @@ public class Appointment
     {
         return Payments.Sum(p => p.Amount);
     }
-
+    private bool IsFullyPaid()
+    {
+        return CalculateTotalPayments() >= Price;
+    }
 }

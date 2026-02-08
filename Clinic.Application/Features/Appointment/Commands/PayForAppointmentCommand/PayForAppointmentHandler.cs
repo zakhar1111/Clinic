@@ -16,7 +16,8 @@ public class PayForAppointmentHandler(IAppointmentRepository repo)
         // 1. Load aggregate
         var appointment = await _repo
             .GetByIdAsync(request.AppointmentId, ct)
-            ?? throw new NullReferenceException(nameof(request));
+            ?? throw new KeyNotFoundException(
+                $"Appointment {request.AppointmentId} not found");
 
         // 2. Execute business logic (inside aggregate)
         appointment.AddPayment(request.Amount, request.PayTypeId);
