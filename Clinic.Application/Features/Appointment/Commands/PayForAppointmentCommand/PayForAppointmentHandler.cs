@@ -19,8 +19,17 @@ public class PayForAppointmentHandler(IAppointmentRepository repo)
             ?? throw new KeyNotFoundException(
                 $"Appointment {request.AppointmentId} not found");
 
-        // 2. Execute business logic (inside aggregate)
-        appointment.AddPayment(request.Amount, request.PayTypeId);
+        // 2. ProcessPayment - domain logic inside aggregate
+        var payment = appointment.AddPayment(
+                request.Amount, 
+                request.PayTypeId
+            );
+
+        payment.MarkAuthorized();   // e.g. payment gateway success
+        payment.MarkPaid();         // money captured
+
+        if (appointment.IsFullyPaid()) 
+            appointment.MarkAsCompleted();
 
         // 3. Persist aggregate
         await _repo.SaveAsync(appointment, ct);

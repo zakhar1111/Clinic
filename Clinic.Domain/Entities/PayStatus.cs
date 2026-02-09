@@ -6,7 +6,8 @@ public class PayStatus
     public string Name { get; set; } 
 }
 
-// - Waiting
+// - Created
+// - Authorized
 // - Paid
 // - Failed
 // - Refunded

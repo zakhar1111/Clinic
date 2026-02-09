@@ -112,10 +112,40 @@ Aggregate:
 Repository:
   - loads & commits aggregate
 
-
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 The key DDD rule you’re touching
 
 Aggregates do business rules
 Handlers / application services do orchestration
 
 Create Appointment - is a workflow 
+
+<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>
+1️⃣ Clear separation of concerns (DDD-pure)
+
+Handler = workflow orchestration
+
+Aggregate = business rules
+
+Entities = state + invariants
+
+This matches textbook DDD:
+
+Application layer coordinates, domain layer enforces.
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+🧭 Rule you can keep forever
+
+Aggregates protect invariants
+Handlers orchestrate workflows
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+6️⃣ Relationship between Appointment & Payment status
+Appointment	Payment
+Scheduled	Created
+InProgress	Authorized
+Paid	Paid
+Completed	Paid
+Cancelled	Failed / Refunded
+
+Appointment reacts to payments — not the other way around.

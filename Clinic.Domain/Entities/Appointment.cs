@@ -148,15 +148,13 @@ public class Appointment
         {
             Amount = amount,
             PayTypeId = payMethod,
-            PayStatusId = 1, // Waiting
+            PayStatusId = 1, // Created
             PaidAt = DateTime.UtcNow,
             AppointmentId = this.Id,
             Appointment = this
         };
 
         Payments.Add(payment);
-
-        if (IsFullyPaid()) MarkAsCompleted();
 
         return payment;
     }
@@ -165,16 +163,24 @@ public class Appointment
         AppointmentStatusId = 2; //InProgress
         AppointmentStatus = new AppointmentStatus { Id = this.Id, Name = "InProgress" };
     }
-    private void MarkAsCompleted()
+    public void MarkAsCompleted()
     {
         AppointmentStatusId = 4;// Completed
-        AppointmentStatus = new AppointmentStatus { Id = AppointmentStatusId, Name = "Completed" };
+        AppointmentStatus = new AppointmentStatus 
+        { 
+            Id = AppointmentStatusId, 
+            Name = "Completed" 
+        };
     }
 
     public void Cancel()
     {
         AppointmentStatusId = 3;// Canceled
-        AppointmentStatus = new AppointmentStatus { Id = AppointmentStatusId };
+        AppointmentStatus = new AppointmentStatus 
+        { 
+            Id = AppointmentStatusId, 
+            Name = "Canceled" 
+        };
     }
 
     public Insurance ApplyInsurance(string provider, int coverage)
@@ -188,12 +194,8 @@ public class Appointment
         return Insurance;
     }
 
-    public decimal CalculateTotalPayments()
-    {
-        return Payments.Sum(p => p.Amount);
-    }
-    private bool IsFullyPaid()
-    {
-        return CalculateTotalPayments() >= Price;
-    }
+    public decimal CalculateTotalPayments() =>
+        Payments.Sum(p => p.Amount);
+    public bool IsFullyPaid() =>
+        CalculateTotalPayments() >= Price;
 }
