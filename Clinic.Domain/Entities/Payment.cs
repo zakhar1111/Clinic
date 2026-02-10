@@ -18,6 +18,27 @@ public class Payment
     public PayType PayType { get; set; }
     public PayStatus PayStatus { get; set; }
 
+
+    public Payment() { } // EF
+
+    public static Payment Create(
+        decimal amount,
+        int payTypeId,
+        int appointmentId)
+    {
+        if (amount <= 0)
+            throw new ArgumentOutOfRangeException(
+                nameof(amount), "Payment amount must be positive.");
+
+        return new Payment
+        {
+            Amount = amount,
+            PayTypeId = payTypeId,
+            AppointmentId = appointmentId,
+            PayStatusId = 1 // Created
+        };
+    }
+
     public void MarkAuthorized()
     {
         EnsureStatus(1);//(PaymentStatuses.Created);
