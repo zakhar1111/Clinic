@@ -1,5 +1,6 @@
 using Clinic.Infrastructure.Extensions;
 using  Clinic.Application.Extensions;
+using Carter;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-
+app.MapCarter();
 app.Run();
 
