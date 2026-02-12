@@ -33,6 +33,6 @@ public class PayForAppointmentHandler(IAppointmentRepository repo)
 
         // 3. Persist aggregate
         await _repo.SaveAsync(appointment, ct);
-        return appointment.Id;
+        return payment.Id;
     }
 }

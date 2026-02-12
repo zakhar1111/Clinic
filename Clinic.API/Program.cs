@@ -11,6 +11,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddClinicInfrastructure(builder.Configuration);
 builder.Services.AddClinicApplicationServices();
 
+builder.Services.AddCarter();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
