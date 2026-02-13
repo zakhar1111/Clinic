@@ -37,14 +37,14 @@ public class AppointmentModule
                     );
 
             })
-            .WithTags("Appointments")
+            .WithTags("Appointment")
             .WithName("PayAppointment")
             .Produces<int>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest);
 
         /// /appointments/{id}/insurance
         app.MapPost(
-            "/appointments/{id}/insurance",
+            "/appointments/{appointmentId}/insurance",
             async (
                 int appointmentId,
                 [FromBody] AttachInsuranceCommand command,
@@ -68,7 +68,7 @@ public class AppointmentModule
 
         /// /appointments/{id}/diagnostics
         app.MapPost(
-            "/appointments/{id}/diagnostics",
+            "/appointments/{appointmentId}/diagnostics",
             async(
                 int appointmentId,
                 [FromBody] AddDiagnosticCommand command,
