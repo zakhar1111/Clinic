@@ -149,3 +149,17 @@ Completed	Paid
 Cancelled	Failed / Refunded
 
 Appointment reacts to payments — not the other way around.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+🔥 Clean REST Summary
+Action	Method	URL
+===========Book appointment	POST	/patients/{id}/appointments
++++++++++++Pay appointment	POST	/appointments/{id}/payments
++++++++++++Attach insurance	POST	/appointments/{id}/insurance
+Get doctor appointments	GET	/doctors/{id}/appointments?date=
++++++++++++Add diagnostic	POST	/appointments/{id}/diagnostics
++++++++++++Add note	POST	/appointments/{id}/notes
++++++++++++Add prescription	POST	/appointments/{id}/prescriptions
+Add shift	POST	/doctors/{id}/shifts
+Add speciality	POST	/doctors/{id}/specialities

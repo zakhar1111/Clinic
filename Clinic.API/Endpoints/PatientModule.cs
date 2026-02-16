@@ -30,7 +30,7 @@ public class PatientModule
                     .ExecuteAsync<BookinfAppointmentCommand,int>(command, ct);
 
                 return Results.Created(
-                    $"/appointments/{appointmentId}",
+                    $"/patients/{patientId}/appointments/{appointmentId}",
                     new { appointmentId });
             })
             .WithTags("Patients")
