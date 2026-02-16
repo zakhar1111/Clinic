@@ -1,6 +1,7 @@
 ﻿using Carter;
 using Clinic.Application.Features.Appointment.Commands.PayForAppointmentCommand;
 using Clinic.Application.Features.Doctor.Commands.AddDiagnosticCommand;
+using Clinic.Application.Features.Doctor.Commands.AddNoteCommand;
 using Clinic.Application.Features.Patient.Commands.AttachInsuranceCommand;
 using Clinic.Domain.Entities;
 using Clinic.Shared.Messaging;
@@ -88,9 +89,30 @@ public class AppointmentModule
             .WithName("AttachDiagnostic")
             .Produces<int>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest);
+        
         /// /appointments/{id}/notes
+        app.MapPost(
+            "/appointments/{appointmentId}/notes",
+            async (
+                int appointmentId,
+                [FromBody] AddNoteCommand command,
+                [FromServices] OperationExecutor mediator,
+                CancellationToken ct) =>
+            {
+                command.AppointmentId = appointmentId;
+                var noteId = await mediator
+                    .ExecuteAsync<AddNoteCommand, int>(command, ct);
+                return Results.Created(
+                    $"/appointments/{appointmentId}/notes/{noteId}",
+                    new { noteId });
+            })
+            .WithTags("Appointment")
+            .WithName("AddNote")
+            .Produces<int>(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status400BadRequest);
+
         /// /appointments /{ id}/ prescriptions
-        /// 
+        
 
     }
 }
