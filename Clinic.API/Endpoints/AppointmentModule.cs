@@ -2,6 +2,7 @@
 using Clinic.Application.Features.Appointment.Commands.PayForAppointmentCommand;
 using Clinic.Application.Features.Doctor.Commands.AddDiagnosticCommand;
 using Clinic.Application.Features.Doctor.Commands.AddNoteCommand;
+using Clinic.Application.Features.Doctor.Commands.AddPrescriptionCommand;
 using Clinic.Application.Features.Patient.Commands.AttachInsuranceCommand;
 using Clinic.Domain.Entities;
 using Clinic.Shared.Messaging;
@@ -112,7 +113,25 @@ public class AppointmentModule
             .Produces(StatusCodes.Status400BadRequest);
 
         /// /appointments /{ id}/ prescriptions
-        
+        app.MapPost(
+            "/appointments/{appointmentId}/prescriptions",
+            async (
+                int appointmentId,
+                [FromBody] AddPrescriptionCommand command,
+                [FromServices] OperationExecutor mediator,
+                CancellationToken ct) =>
+            {
+                command.AppointmentId = appointmentId;
+                var prescriptionId = await mediator
+                    .ExecuteAsync<AddPrescriptionCommand, int>(command, ct);
+                return Results.Created(
+                    $"/appointments/{appointmentId}/prescriptions/{prescriptionId}",
+                    new { prescriptionId });
+            })
+            .WithTags("Appointment")
+            .WithName("AddPrescription")
+            .Produces<int>(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status400BadRequest);
 
     }
 }
