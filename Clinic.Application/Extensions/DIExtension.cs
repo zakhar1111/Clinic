@@ -32,6 +32,7 @@ public static class DIExtension
         services.AddScoped<IOperationHandler<AttachInsuranceCommand, int>, AttachInsuranceHandler>();
         services.AddScoped<IOperationHandler<AddPaymentCommand, int>, AddPaymentHandler>();
 
+        services.AddScoped<OperationExecutor>();
         return services;
     }
 }

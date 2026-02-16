@@ -1,6 +1,7 @@
 ﻿using Carter;
 using Clinic.Application.Features.Doctor.Commands.AddDoctorShiftCommand;
 using Clinic.Application.Features.Doctor.Commands.AddDoctorSpecialityCommand;
+using Clinic.Application.Features.Doctor.Queries.GetAppointmentByDateQuery;
 using Clinic.Domain.Entities;
 using Clinic.Shared.Messaging;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,25 @@ public class DoctorModule
     public override void AddRoutes(IEndpointRouteBuilder app) 
     {
         ///Get doctor appointments GET / doctors /{ id}/ appointments ? date =
+        app.MapGet(
+            "/doctors/{doctorId}/appointments",
+            async (
+                int doctorId,
+                [AsParameters] GetAppointmentByDateQuery query,
+                [FromServices] OperationExecutor mediator,
+                CancellationToken ct
+                ) =>
+            {
+                query.DoctorId = doctorId;
+                var appointments = await mediator
+                    .ExecuteAsync< GetAppointmentByDateQuery, List< AppointmentSummaryDto>> (query, ct);
+                return Results.Ok(appointments);
+            })
+            .WithTags("Doctors")
+            .WithName("GetAppointments")
+            .Produces<IEnumerable<Appointment>>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status400BadRequest);
+
         ///Add shift	POST	/doctors/{id}/shifts
         app.MapPost(
             "/doctors/{doctorId}/shifts",

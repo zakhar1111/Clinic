@@ -162,4 +162,4 @@ Get doctor appointments	GET	/doctors/{id}/appointments?date=
 +++++++++++Add note	POST	/appointments/{id}/notes
 +++++++++++Add prescription	POST	/appointments/{id}/prescriptions
 -----------Add shift	POST	/doctors/{id}/shifts
-Add speciality	POST	/doctors/{id}/specialities
+-----------Add speciality	POST	/doctors/{id}/specialities
