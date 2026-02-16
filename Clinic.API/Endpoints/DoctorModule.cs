@@ -1,0 +1,43 @@
+﻿using Carter;
+using Clinic.Application.Features.Doctor.Commands.AddDoctorShiftCommand;
+using Clinic.Domain.Entities;
+using Clinic.Shared.Messaging;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace Clinic.API.Endpoints;
+
+public class DoctorModule
+    : CarterModule
+{
+    public DoctorModule() : base("")
+    { }
+    public override void AddRoutes(IEndpointRouteBuilder app) 
+    {
+        ///Get doctor appointments GET / doctors /{ id}/ appointments ? date =
+        ///Add shift	POST	/doctors/{id}/shifts
+        app.MapPost(
+            "/doctors/{doctorId}/shifts",
+            async(
+                int doctorId,
+                [FromBody] AddDoctorShiftCommand command,
+                [FromServices] OperationExecutor mediator,
+                CancellationToken ct
+                ) =>
+            { 
+                command.DoctorId = doctorId;
+                var shiftId = await mediator
+                    .ExecuteAsync<AddDoctorShiftCommand, int>(command, ct);
+
+                return Results.Created(
+                    $"/doctors/{doctorId}/shifts/{shiftId}",
+                    new { shiftId });
+            })
+            .WithTags("Doctors")
+            .WithName("AddShift")
+            .Produces(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status400BadRequest);
+        ///Add speciality  POST / doctors /{ id}/ specialities
+    }
+}
