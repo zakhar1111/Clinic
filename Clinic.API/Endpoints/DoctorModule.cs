@@ -1,5 +1,6 @@
 ﻿using Carter;
 using Clinic.Application.Features.Doctor.Commands.AddDoctorShiftCommand;
+using Clinic.Application.Features.Doctor.Commands.AddDoctorSpecialityCommand;
 using Clinic.Domain.Entities;
 using Clinic.Shared.Messaging;
 using Microsoft.AspNetCore.Mvc;
@@ -39,5 +40,26 @@ public class DoctorModule
             .Produces(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest);
         ///Add speciality  POST / doctors /{ id}/ specialities
+        app.MapPost(
+            "/doctors/{doctorId}/specialities",
+            async (
+                int doctorId,
+                [FromBody] AddDoctorSpecialityCommand command,
+                [FromServices] OperationExecutor mediator,
+                CancellationToken ct
+                ) =>
+            {
+                command.DoctorId = doctorId;
+                var specialityId = await mediator
+                    .ExecuteAsync<AddDoctorSpecialityCommand, int>(command, ct);
+                
+                return Results.Created(
+                    $"/doctors/{doctorId}/specialities/{specialityId}",
+                    new { specialityId });
+            })
+            .WithTags("Doctors")
+            .WithName("AddSpeciality")
+            .Produces(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status400BadRequest);
     }
 }
