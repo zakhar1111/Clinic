@@ -35,9 +35,6 @@ public class BookingAppointmentHandler(
             request.DurationInSlots
             );
 
-        await _patientRepository.SaveAsync(patient, ct);
-        //return newBooking.Id;
-
         var appointment = Clinic.Domain.Entities.Appointment.Create(
             newBooking,
             request.Price,
@@ -46,6 +43,9 @@ public class BookingAppointmentHandler(
             );
 
         await _appointmentRepository.AddAsync(appointment, ct);
+
+        await _patientRepository.SaveAsync(patient, ct);
+        await _appointmentRepository.SaveAsync(appointment, ct);
 
         return appointment.Id;
     }
