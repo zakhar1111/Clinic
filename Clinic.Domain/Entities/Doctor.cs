@@ -37,4 +37,22 @@ public class Doctor
             Slot15Min = slot
         });
     }
+
+    public static Doctor Create(
+        string name,
+        string phone,
+        string email,
+        string bio)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Name is required", nameof(name));
+        
+        return new Doctor
+        {
+            Name = name,
+            Phone = phone ?? string.Empty,
+            Email = email ?? string.Empty,
+            Bio = bio ?? string.Empty
+        };
+    }
 }
