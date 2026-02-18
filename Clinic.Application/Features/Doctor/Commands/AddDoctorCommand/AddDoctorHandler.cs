@@ -11,6 +11,7 @@ public class AddDoctorHandler(IDoctorRepository doctorRepository)
     public async Task<int> HandleAsync(AddDoctorCommand request, CancellationToken ct = default)
     {
         var doctor = Clinic.Domain.Entities.Doctor.Create(
+            request.UserId,
             request.Name,
             request.Phone,
             request.Email,

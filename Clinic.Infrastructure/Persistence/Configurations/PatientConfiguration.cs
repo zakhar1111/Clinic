@@ -14,6 +14,10 @@ public class PatientConfiguration
         builder.Property(x => x.Id)
             .ValueGeneratedOnAdd();
 
+        builder.Property(p => p.UserId)
+            .IsRequired()
+            .HasMaxLength(50);
+
         builder.Property(p => p.Name)
             .IsRequired()
             .HasMaxLength(50);

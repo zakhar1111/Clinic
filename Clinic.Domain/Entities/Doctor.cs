@@ -4,6 +4,7 @@ namespace Clinic.Domain.Entities;
 public class Doctor
 {
     public int Id { get; set; }
+    public string UserId { get; set; } 
     public string Name { get; set; }
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
@@ -39,6 +40,7 @@ public class Doctor
     }
 
     public static Doctor Create(
+        string userId,
         string name,
         string phone,
         string email,
@@ -46,7 +48,9 @@ public class Doctor
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Name is required", nameof(name));
-        
+        if (string.IsNullOrWhiteSpace(userId))
+            throw new ArgumentException("UserId is required", nameof(userId));
+
         return new Doctor
         {
             Name = name,

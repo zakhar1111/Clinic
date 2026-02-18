@@ -14,6 +14,10 @@ public class DoctorConfiguration
         builder.Property(x => x.Id)
             .ValueGeneratedOnAdd();
 
+        builder.Property(d => d.UserId)
+            .IsRequired()
+            .HasMaxLength(50);
+
         builder.Property(d => d.Name)
             .IsRequired()
             .HasMaxLength(50);

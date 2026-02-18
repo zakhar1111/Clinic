@@ -163,3 +163,6 @@ Get doctor appointments	GET	/doctors/{id}/appointments?date=
 +++++++++++Add prescription	POST	/appointments/{id}/prescriptions
 -----------Add shift	POST	/doctors/{id}/shifts
 -----------Add speciality	POST	/doctors/{id}/specialities
+
+[TODO] - add events for creating Users  Doctor, Patient
+[TODO] - add infrastructure for events, messageBox pattern, event handlers, etc.

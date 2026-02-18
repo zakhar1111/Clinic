@@ -5,6 +5,7 @@ namespace Clinic.Application.Features.Doctor.Commands.AddDoctorCommand;
 public class AddDoctorCommand
     : IRequest<int>
 {
+    public string UserId { get; set; } = default!;
     public string Name { get; set; } = default!;
     public string Phone { get; set; } = default!;
     public string Email { get; set; } = default!;
