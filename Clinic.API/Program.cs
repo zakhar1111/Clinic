@@ -1,5 +1,5 @@
 using Clinic.Infrastructure.Extensions;
-using  Clinic.Application.Extensions;
+using Clinic.Application.Extensions;
 using Clinic.Shared.Infrastructure.DIExtensions;
 using Carter;
 
@@ -13,6 +13,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddClinicInfrastructure(builder.Configuration);
 builder.Services.AddClinicApplicationServices();
 builder.Services.AddSharedInfrastructure(builder.Configuration);
+
+builder.Services.AddHostedService<IntegrationEventBackgroundService>();
 
 builder.Services.AddCarter();
 
@@ -31,4 +33,3 @@ app.UseHttpsRedirection();
 
 app.MapCarter();
 app.Run();
-
