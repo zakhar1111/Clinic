@@ -1,4 +1,5 @@
-﻿using Clinic.Application.Features.Appointment.Commands.PayForAppointmentCommand;
+﻿using Clinic.Application.Events.NewUserCreatedEvent;
+using Clinic.Application.Features.Appointment.Commands.PayForAppointmentCommand;
 using Clinic.Application.Features.Doctor.Commands.AddDiagnosticCommand;
 using Clinic.Application.Features.Doctor.Commands.AddDoctorCommand;
 using Clinic.Application.Features.Doctor.Commands.AddDoctorShiftCommand;
@@ -9,6 +10,7 @@ using Clinic.Application.Features.Doctor.Queries.GetAppointmentByDateQuery;
 using Clinic.Application.Features.Patient.Commands.AddPaymentCommand;
 using Clinic.Application.Features.Patient.Commands.AttachInsuranceCommand;
 using Clinic.Application.Features.Patient.Commands.BookinfAppointmentCommand;
+using Clinic.Shared.Events;
 using Clinic.Shared.Messaging;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -35,6 +37,9 @@ public static class DIExtension
         services.AddScoped<IOperationHandler<AddPaymentCommand, int>, AddPaymentHandler>();
 
         services.AddScoped<OperationExecutor>();
+
+        services.AddScoped<IIntegrationEventHandler<NewUserCreatedEvent>,NewUserCreatedEventHandler>();
+
         return services;
     }
 }
