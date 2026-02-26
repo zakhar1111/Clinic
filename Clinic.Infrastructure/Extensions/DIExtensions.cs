@@ -1,5 +1,6 @@
 ﻿using Clinic.Application.Repositories;
 using Clinic.Application.Services;
+using Clinic.Infrastructure.Messaging;
 using Clinic.Infrastructure.Persistence;
 using Clinic.Infrastructure.Persistence.Repositories;
 using Clinic.Infrastructure.Persistence.Services;
@@ -40,6 +41,7 @@ public static class DIExtensions
         services.AddScoped<IAppointmentQueryService, AppointmentQueryService>();
         services.AddScoped<IDoctorAvailabilityService, DoctorAvailabilityService>();
 
+        services.AddScoped<IntegrationEventDispatcher>();
         return services;
     }
 }

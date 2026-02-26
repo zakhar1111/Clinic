@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Clinic.Shared.Events;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +29,8 @@ public static class DIExtensions
                 }
             )
         );
+
+        services.AddScoped<IEventRepository, EventRepository>();
         return services;
     }
 }
