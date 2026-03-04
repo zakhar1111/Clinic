@@ -56,7 +56,8 @@ public class Doctor
             Name = name,
             Phone = phone ?? string.Empty,
             Email = email ?? string.Empty,
-            Bio = bio ?? string.Empty
+            Bio = bio ?? string.Empty,
+            UserId = userId
         };
     }
 }

@@ -1,4 +1,6 @@
-﻿using Clinic.Shared.Events;
+﻿using Clinic.Application.Events.NewUserCreatedEvent;
+using Clinic.Shared.Events;
+using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
 
 namespace Clinic.Infrastructure.Messaging;
@@ -10,9 +12,9 @@ public class IntegrationEventDispatcher(
     private readonly IServiceProvider _provider = provider;
     private readonly IEventRepository _repository = repository;
 
-
     public async Task DispatchAsync(CancellationToken ct)
     {
+        Console.WriteLine("Dispatching integration events...");
         var events = await _repository.GetUnprocessedAsync(ct);
 
         foreach (var integrationEvent in events)
