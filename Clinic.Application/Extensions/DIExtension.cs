@@ -40,7 +40,6 @@ public static class DIExtension
 
         services.AddScoped<OperationExecutor>();
 
-        services.AddScoped<IIntegrationEventHandler<NewUserCreatedEvent>,NewUserCreatedEventHandler>();
         services.AddScoped<IIntegrationEventHandler<DoctorUserCreatedEvent>, DoctorUserCreatedEventHandler>();
         services.AddScoped<IIntegrationEventHandler<PatientUserCreatedEvent>, PatientUserCreatedEventHandler>();
 
