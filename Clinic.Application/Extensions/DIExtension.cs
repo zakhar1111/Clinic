@@ -1,4 +1,6 @@
-﻿using Clinic.Application.Events.NewUserCreatedEvent;
+﻿using Clinic.Application.Events.DoctorUserCreatedEvent;
+using Clinic.Application.Events.NewUserCreatedEvent;
+using Clinic.Application.Events.PatientUserCreatedEvent;
 using Clinic.Application.Features.Appointment.Commands.PayForAppointmentCommand;
 using Clinic.Application.Features.Doctor.Commands.AddDiagnosticCommand;
 using Clinic.Application.Features.Doctor.Commands.AddDoctorCommand;
@@ -39,6 +41,8 @@ public static class DIExtension
         services.AddScoped<OperationExecutor>();
 
         services.AddScoped<IIntegrationEventHandler<NewUserCreatedEvent>,NewUserCreatedEventHandler>();
+        services.AddScoped<IIntegrationEventHandler<DoctorUserCreatedEvent>, DoctorUserCreatedEventHandler>();
+        services.AddScoped<IIntegrationEventHandler<PatientUserCreatedEvent>, PatientUserCreatedEventHandler>();
 
         return services;
     }
