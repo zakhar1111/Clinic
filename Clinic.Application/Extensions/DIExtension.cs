@@ -1,5 +1,4 @@
 ﻿using Clinic.Application.Events.DoctorUserCreatedEvent;
-using Clinic.Application.Events.NewUserCreatedEvent;
 using Clinic.Application.Events.PatientUserCreatedEvent;
 using Clinic.Application.Features.Appointment.Commands.PayForAppointmentCommand;
 using Clinic.Application.Features.Doctor.Commands.AddDiagnosticCommand;

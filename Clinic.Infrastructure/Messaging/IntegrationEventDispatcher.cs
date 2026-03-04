@@ -1,6 +1,4 @@
-﻿using Clinic.Application.Events.NewUserCreatedEvent;
-using Clinic.Shared.Events;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Clinic.Shared.Events;
 using System.Text.Json;
 
 namespace Clinic.Infrastructure.Messaging;
