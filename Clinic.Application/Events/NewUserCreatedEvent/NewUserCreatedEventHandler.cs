@@ -34,10 +34,15 @@ public class NewUserCreatedEventHandler(
         }
         else if (@event.Role == "Patient")
         {
+            //TODO: change creating from payload of Event
             var patient = new Patient
             {
-                Name = @event.Email,
-                Email = @event.Email
+                Name = @event.Name,
+                Email = @event.Email,
+                UserId = @event.UserId,
+                Phone = @event.Phone,
+                DateOfBirth = DateTime.Now,
+                GovId = ""
             };
 
             await _patientRepository.AddAsync(patient, ct);
