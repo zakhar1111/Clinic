@@ -3,4 +3,12 @@
 GET {{Clinic.API_HostAddress}}/weatherforecast/
 Accept: application/json
 
-###
+
+### Add doctor shift
+POST {{Clinic.API_HostAddress}}/doctors/1/shifts
+Content-Type: application/json
+
+{
+  "startTime": "09:00:00",
+  "slot15Min": 20
+}
