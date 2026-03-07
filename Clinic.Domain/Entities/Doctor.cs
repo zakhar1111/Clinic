@@ -26,7 +26,7 @@ public class Doctor
         });
     }
 
-    public void AddShift(TimeSpan start, int slot)
+    public void AddShift(TimeSpan start, int slot, DateOnly day)
     {
         if (Shifts.Any(s => s.StartTime == start))
             throw new InvalidOperationException("Shift already exists");
@@ -35,7 +35,8 @@ public class Doctor
         {
             DoctorId = this.Id,
             StartTime = start,
-            Slot15Min = slot
+            Slot15Min = slot,
+            Day = day
         });
     }
 

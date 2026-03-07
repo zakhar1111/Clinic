@@ -13,7 +13,7 @@ internal class AddDoctorShiftHandler(IDoctorRepository doctorRepository)
         var doctor = await _doctorRepository.GetByIdAsync(command.DoctorId, ct)
             ?? throw new KeyNotFoundException("Doctor not found");
 
-        doctor.AddShift(command.StartTime, command.Slot15Min);
+        doctor.AddShift(command.StartTime, command.Slot15Min, command.Day);
 
         await _doctorRepository.SaveAsync(doctor,ct);
         return doctor.Id;

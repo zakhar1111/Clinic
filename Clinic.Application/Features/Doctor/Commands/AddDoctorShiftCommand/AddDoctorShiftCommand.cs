@@ -8,4 +8,5 @@ public class AddDoctorShiftCommand
     public int DoctorId { get; set; }
     public TimeSpan StartTime { get; set; }
     public int Slot15Min { get; set; }
+    public DateOnly Day { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);
 }

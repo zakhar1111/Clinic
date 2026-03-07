@@ -33,7 +33,7 @@ public class Appointment
         if (price < 0)
             throw new ArgumentOutOfRangeException(nameof(price));
 
-        if (booking.BookingStatusId !=  2) // Confirmed
+        if (booking.BookingStatusId !=  1) // Confirmed
             throw new InvalidOperationException(
                 "Appointment can only be created from a confirmed booking.");
 
@@ -41,15 +41,17 @@ public class Appointment
         { 
             Booking = booking,
             AppointmentStatusId = 1, // Scheduled
-            AppointmentStatus = new AppointmentStatus
-            {
-                Id = 1, // Scheduled
-            },
+            //AppointmentStatus = new AppointmentStatus --->  [TODO]: --> [behavior pipeline] async post transaction update on Booking
+            //{
+            //    Id = 1, // Scheduled
+            //},
             InsuranceId = insurance?.Id,
             Insurance = insurance,
             Price = price,
             Currency = currency
         };
+
+        booking.
     }
 
     public Note AddNote(string content)

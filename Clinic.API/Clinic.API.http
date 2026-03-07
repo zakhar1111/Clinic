@@ -3,12 +3,32 @@
 GET {{Clinic.API_HostAddress}}/weatherforecast/
 Accept: application/json
 
-
-### Add doctor shift
+################# DOCTOR #################
+### AddDoctorShiftCommand 
 POST {{Clinic.API_HostAddress}}/doctors/1/shifts
 Content-Type: application/json
 
 {
   "startTime": "09:00:00",
-  "slot15Min": 20
+  "slot15Min": 20,
+  "day": "2026-03-06"
+}
+
+### AddDoctorSpecialityCommand
+POST {{Clinic.API_HostAddress}}/doctors/1/specialities
+{
+  "doctorId": 1,
+  "specialityId": 1
+}
+
+################# PATIENT #################
+### Book appointment
+POST {{Clinic.API_HostAddress}}/patients/3/appointments
+Content-Type: application/json
+{
+  "doctorId": 1,
+  "onDate": "2026-03-06T09:00:00",
+  "durationInSlots": 2,
+  "price": 120,
+  "currency": "USD"
 }

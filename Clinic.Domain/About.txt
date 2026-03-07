@@ -40,10 +40,10 @@ Patient → Booking → Appointment →
    @@@@@@@@@@@@@@@@@@@@@@@@
 
 @@@@@@ Relationship Overview 
- Patient ─┐
+Patient ─┐
          ├── Booking ─── Appointment ─── Payment
 Doctor ──┘                  │
-                              └── Insurance
+                            └── Insurance
 
 Doctor ─── DoctorShift
 Doctor ─── Department
@@ -94,11 +94,8 @@ Doctor ─── Department
 If you want next:
 
 Aggregate methods (AddPayment, CompleteAppointment)
-
 Domain invariants enforcement
-
 Application service layer examples
-
 EF Core repository implementations
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -124,13 +121,10 @@ Create Appointment - is a workflow
 1️⃣ Clear separation of concerns (DDD-pure)
 
 Handler = workflow orchestration
-
 Aggregate = business rules
-
 Entities = state + invariants
 
 This matches textbook DDD:
-
 Application layer coordinates, domain layer enforces.
 
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -164,5 +158,5 @@ Get doctor appointments	GET	/doctors/{id}/appointments?date=
 -----------Add shift	POST	/doctors/{id}/shifts
 -----------Add speciality	POST	/doctors/{id}/specialities
 
-[TODO] - add events for creating Users  Doctor, Patient
+[OK] - add events for creating Users  Doctor, Patient
 [TODO] - add infrastructure for events, messageBox pattern, event handlers, etc.
