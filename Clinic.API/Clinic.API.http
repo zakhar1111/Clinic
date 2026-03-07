@@ -1,7 +1,5 @@
 @Clinic.API_HostAddress = http://localhost:5021
 
-GET {{Clinic.API_HostAddress}}/weatherforecast/
-Accept: application/json
 
 ################# DOCTOR #################
 ### AddDoctorShiftCommand 
@@ -21,6 +19,14 @@ POST {{Clinic.API_HostAddress}}/doctors/1/specialities
   "specialityId": 1
 }
 
+### AddDoctorSpecialityCommand
+POST {{Clinic.API_HostAddress}}/doctors/2/specialities
+{
+  "doctorId": 2,
+  "specialityId": 2
+}
+
+
 ################# PATIENT #################
 ### Book appointment
 POST {{Clinic.API_HostAddress}}/patients/3/appointments
@@ -31,4 +37,45 @@ Content-Type: application/json
   "durationInSlots": 2,
   "price": 120,
   "currency": "USD"
+}
+
+################# APPOINTMENT #################
+### GetAppointmentByDateQuery
+GET {{Clinic.API_HostAddress}}/doctors/1/appointments?date=2026-03-06
+
+### AttachInsuranceCommand
+POST {{Clinic.API_HostAddress}}/appointments/1/insurance
+Content-Type: application/json
+{
+  "appointmentId": 1,
+  "provider": "School standard ",
+  "coverage": 100
+}
+
+### AddDiagnosticCommand
+POST {{Clinic.API_HostAddress}}/appointments/1/diagnostics
+Content-Type: application/json
+{
+  "appointmentId": 1,
+  "testName": "tonometer",
+  "result": "High blood pressure"
+}
+
+### AddNoteCommand
+POST {{Clinic.API_HostAddress}}/appointments/1/notes
+Content-Type: application/json
+{
+  "appointmentId": 1,
+  "content": "Patient has high blood pressure, needs to reduce salt intake."
+}
+
+### AddPrescriptionCommand
+POST {{Clinic.API_HostAddress}}/appointments/1/prescriptions
+Content-Type: application/json
+{
+  "appointmentId": 1,
+  "doctorId": 1,
+  "medication": "Lisinopril",
+  "dosage": "10mg once daily",
+  "instructions": "take till the end"
 }

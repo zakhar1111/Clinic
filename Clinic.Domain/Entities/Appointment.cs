@@ -50,8 +50,6 @@ public class Appointment
             Price = price,
             Currency = currency
         };
-
-        booking.
     }
 
     public Note AddNote(string content)
