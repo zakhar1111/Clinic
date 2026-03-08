@@ -46,6 +46,14 @@ Content-Type: application/json
 }
 
 ################# APPOINTMENT #################
+### PayForAppointmentCommand
+POST {{Clinic.API_HostAddress}}/appointments/1/payments
+Content-Type: application/json
+{
+  "appointmentId": 1,
+  "amount": 120,
+  "payTypeId": 2
+}
 ### GetAppointmentByDateQuery
 GET {{Clinic.API_HostAddress}}/doctors/1/appointments?date=2026-03-06
 

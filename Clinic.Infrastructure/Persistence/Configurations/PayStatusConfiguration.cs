@@ -14,9 +14,13 @@ public class PayStatusConfiguration
         builder.Property(e => e.Name).IsRequired().HasMaxLength(50);
 
         builder.HasData(
-            new PayStatus { Id = 1, Name = "Paid" },
-            new PayStatus { Id = 2, Name = "Unpaid" },
-            new PayStatus { Id = 3, Name = "Pending" }
+            new PayStatus { Id = 1, Name = "Created" },
+            new PayStatus { Id = 2, Name = "Authorized" },
+            new PayStatus { Id = 3, Name = "Paid" },
+            new PayStatus { Id = 4, Name = "Failed" },
+            new PayStatus { Id = 5, Name = "Refunded" }
         );
     }
 }
+
+

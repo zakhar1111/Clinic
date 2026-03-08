@@ -104,7 +104,7 @@ public class Appointment
     }
     private void EnsureInProgress()
     {
-        if (AppointmentStatusId != 2) // InProgress
+        if (AppointmentStatusId != 1) // InProgress 
         {
             throw new InvalidOperationException(
                 "Operation allowed only when appointment is active = InProgress.");
