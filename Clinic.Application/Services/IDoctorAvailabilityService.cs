@@ -7,4 +7,8 @@ public interface IDoctorAvailabilityService
         DateTime date,
         int requiredSlots,
         CancellationToken ct);
+    Task<List<DateTime>> GetAvailableSlotsAsync(
+        int doctorId,
+        DateOnly day,
+        CancellationToken ct);
 }

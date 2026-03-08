@@ -44,4 +44,45 @@ public class DoctorAvailabilityService(ClinicDbContext context)
         //    .ToListAsync();
 
     }
+
+    public async Task<List<DateTime>> GetAvailableSlotsAsync(
+        int doctorId,
+        DateOnly day,
+        CancellationToken ct)
+    {
+        var shift = await _context.Set<Shift>()
+            .SingleOrDefaultAsync(s =>
+                s.DoctorId == doctorId &&
+                s.Day == day,
+                ct);
+
+        if (shift == null) return [];
+
+        var shiftStart = day.ToDateTime(TimeOnly.FromTimeSpan(shift.StartTime));
+
+        // generate all shift slots
+        var slots = Enumerable
+            .Range(0, shift.Slot15Min)
+            .Select(i => shiftStart.AddMinutes(i * 15))
+            .ToList();
+
+        // get bookings for the day
+        var bookings = await _context.Set<Booking>()
+            .Where(b =>
+                b.DoctorId == doctorId &&
+               DateOnly.FromDateTime( b.OnDate.Date) == day)
+            .ToListAsync(ct);
+
+        // expand bookings to occupied slots
+        var bookedSlots = bookings
+            .SelectMany(b =>
+                Enumerable.Range(0, b.DurationIn15MinSlots)
+                    .Select(i => b.OnDate.AddMinutes(i * 15)))
+            .ToHashSet();
+
+        // return free slots
+        return slots
+            .Where(s => !bookedSlots.Contains(s))
+            .ToList();
+    }
 }
