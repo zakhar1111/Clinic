@@ -2,6 +2,12 @@
 
 
 ################# DOCTOR #################
+### Get doctor availability slots
+GET {{Clinic.API_HostAddress}}/doctors/1/available-slots?date=2026-03-06
+
+### Get doctors appointments
+GET {{Clinic.API_HostAddress}}/doctors/1/appointments?date=2026-03-06
+
 ### AddDoctorShiftCommand 
 POST {{Clinic.API_HostAddress}}/doctors/1/shifts
 Content-Type: application/json

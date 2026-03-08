@@ -2,6 +2,7 @@
 using Clinic.Application.Features.Doctor.Commands.AddDoctorShiftCommand;
 using Clinic.Application.Features.Doctor.Commands.AddDoctorSpecialityCommand;
 using Clinic.Application.Features.Doctor.Queries.GetAppointmentByDateQuery;
+using Clinic.Application.Services;
 using Clinic.Domain.Entities;
 using Clinic.Shared.Messaging;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,28 @@ public class DoctorModule
     { }
     public override void AddRoutes(IEndpointRouteBuilder app) 
     {
+        /// Get doctor available slots GET / doctors /{ id}/ available - slots ? date =
+        app.MapGet(
+            "/doctors/{doctorId}/available-slots",
+            async (
+                int doctorId,
+                [FromQuery] DateOnly date,
+                [FromServices] IDoctorAvailabilityService service,
+                CancellationToken ct
+                ) =>
+            {
+                var availableSlots = await service
+                    .GetAvailableSlotsAsync(
+                        doctorId,
+                        date,
+                        ct);
+                return Results.Ok(availableSlots);
+            }
+            )
+            .WithTags("Doctors")
+            .WithName("GetAvailableSlots")
+            .Produces<IEnumerable<DateTime>>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status400BadRequest);
         ///Get doctor appointments GET / doctors /{ id}/ appointments ? date =
         app.MapGet(
             "/doctors/{doctorId}/appointments",
