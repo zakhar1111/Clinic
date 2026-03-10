@@ -47,10 +47,10 @@ Content-Type: application/json
 
 ################# APPOINTMENT #################
 ### PayForAppointmentCommand
-POST {{Clinic.API_HostAddress}}/appointments/1/payments
+POST {{Clinic.API_HostAddress}}/appointments/3/payments
 Content-Type: application/json
 {
-  "appointmentId": 1,
+  "appointmentId": 3,
   "amount": 120,
   "payTypeId": 2
 }
@@ -58,36 +58,36 @@ Content-Type: application/json
 GET {{Clinic.API_HostAddress}}/doctors/1/appointments?date=2026-03-06
 
 ### AttachInsuranceCommand
-POST {{Clinic.API_HostAddress}}/appointments/1/insurance
+POST {{Clinic.API_HostAddress}}/appointments/3/insurance
 Content-Type: application/json
 {
-  "appointmentId": 1,
+  "appointmentId": 3,
   "provider": "School standard ",
   "coverage": 100
 }
 
 ### AddDiagnosticCommand
-POST {{Clinic.API_HostAddress}}/appointments/1/diagnostics
+POST {{Clinic.API_HostAddress}}/appointments/3/diagnostics
 Content-Type: application/json
 {
-  "appointmentId": 1,
+  "appointmentId": 3,
   "testName": "tonometer",
-  "result": "High blood pressure"
+  "result": "High blood pressure fixed"
 }
 
 ### AddNoteCommand
-POST {{Clinic.API_HostAddress}}/appointments/1/notes
+POST {{Clinic.API_HostAddress}}/appointments/3/notes
 Content-Type: application/json
 {
-  "appointmentId": 1,
+  "appointmentId": 3,
   "content": "Patient has high blood pressure, needs to reduce salt intake."
 }
 
 ### AddPrescriptionCommand
-POST {{Clinic.API_HostAddress}}/appointments/1/prescriptions
+POST {{Clinic.API_HostAddress}}/appointments/3/prescriptions
 Content-Type: application/json
 {
-  "appointmentId": 1,
+  "appointmentId": 3,
   "doctorId": 1,
   "medication": "Lisinopril",
   "dosage": "10mg once daily",

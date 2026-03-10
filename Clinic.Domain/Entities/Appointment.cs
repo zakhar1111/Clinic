@@ -12,7 +12,6 @@ public class Appointment
     public int AppointmentStatusId { get; set; }
     public int? InsuranceId { get; set; }
 
-    public AppointmentStatus AppointmentStatus { get; set; }
     public Booking Booking { get; set; }
     public Insurance? Insurance { get; set; }
     public List<Note> Notes { get; set; } = new();
@@ -40,11 +39,7 @@ public class Appointment
         return new Appointment
         { 
             Booking = booking,
-            AppointmentStatusId = 1, // Scheduled
-            //AppointmentStatus = new AppointmentStatus --->  [TODO]: --> [behavior pipeline] async post transaction update on Booking
-            //{
-            //    Id = 1, // Scheduled
-            //},
+            AppointmentStatusId = (int)AppointmentStatusEnum.Scheduled, 
             InsuranceId = insurance?.Id,
             Insurance = insurance,
             Price = price,
@@ -54,10 +49,8 @@ public class Appointment
 
     public Note AddNote(string content)
     {
-        if (this.AppointmentStatusId == 3) // Cancelled
-            throw new InvalidOperationException(
-                "Cannot add notes to a cancelled appointment");
-
+        this.EnsureNotCanceled();
+        
         var newNote = new Note
         {
             Text = content,
@@ -75,10 +68,8 @@ public class Appointment
         string dosage, 
         string frequency)
     {
-        if(this.AppointmentStatusId == 3) // Cancelled
-            throw new InvalidOperationException(
-                "Cannot add prescriptions to a cancelled appointment");
-
+        this.EnsureInProgress();
+        
         if(string.IsNullOrWhiteSpace(medicine))
             throw new ArgumentException(
                 "Medicine name cannot be empty", nameof(medicine));
@@ -104,15 +95,21 @@ public class Appointment
     }
     private void EnsureInProgress()
     {
-        if (AppointmentStatusId != 1) // InProgress 
+        if (AppointmentStatusId != (int)AppointmentStatusEnum.InProgress) 
         {
             throw new InvalidOperationException(
                 "Operation allowed only when appointment is active = InProgress.");
         }
     }
+    private void EnsureNotCanceled()
+    {
+        if (AppointmentStatusId == (int)AppointmentStatusEnum.Cancelled)
+            throw new InvalidOperationException(
+                "Operation not allowed for cancelled appointments.");
+    }
     public Diagnostic AddDiagnostic(string testName, string results)
     {
-        if (AppointmentStatusId == 2)
+        if (AppointmentStatusId == (int)AppointmentStatusEnum.Scheduled) // if Scheduled set InProgress to allow adding diagnostics for in progress appointments only
             Start();
 
         if (string.IsNullOrWhiteSpace(testName))
@@ -160,34 +157,21 @@ public class Appointment
     }
     public void Start()
     {
-        AppointmentStatusId = 2; //InProgress
-        AppointmentStatus = new AppointmentStatus { Id = this.Id, Name = "InProgress" };
+        AppointmentStatusId = (int)AppointmentStatusEnum.InProgress; 
     }
     public void MarkAsCompleted()
     {
-        AppointmentStatusId = 4;// Completed
-        AppointmentStatus = new AppointmentStatus 
-        { 
-            Id = AppointmentStatusId, 
-            Name = "Completed" 
-        };
+        AppointmentStatusId = (int)AppointmentStatusEnum.Completed; 
     }
 
     public void Cancel()
     {
-        AppointmentStatusId = 3;// Canceled
-        AppointmentStatus = new AppointmentStatus 
-        { 
-            Id = AppointmentStatusId, 
-            Name = "Canceled" 
-        };
+        AppointmentStatusId = (int)AppointmentStatusEnum.Cancelled; 
     }
 
     public Insurance ApplyInsurance(string provider, int coverage)
     {
-        if(AppointmentStatusId != 1) // Scheduled
-            throw new InvalidOperationException(
-                "Insurance can only be attached to scheduled appointments.");
+        this.EnsureNotCanceled();
 
         Insurance = Insurance.Create(provider, coverage);
         InsuranceId = Insurance.Id;

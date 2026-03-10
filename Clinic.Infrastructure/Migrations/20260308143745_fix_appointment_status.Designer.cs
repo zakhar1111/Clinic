@@ -4,6 +4,7 @@ using Clinic.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace clinic.Infrastructure.Migrations
 {
     [DbContext(typeof(ClinicDbContext))]
-    partial class ClinicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260308143745_fix_appointment_status")]
+    partial class fix_appointment_status
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,7 +88,7 @@ namespace clinic.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            Name = "Scheduled"
+                            Name = "Paid"
                         },
                         new
                         {
@@ -583,7 +586,7 @@ namespace clinic.Infrastructure.Migrations
 
             modelBuilder.Entity("Clinic.Domain.Entities.Appointment", b =>
                 {
-                    b.HasOne("Clinic.Domain.Entities.AppointmentStatus", null)
+                    b.HasOne("Clinic.Domain.Entities.AppointmentStatus", "AppointmentStatus")
                         .WithMany()
                         .HasForeignKey("AppointmentStatusId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -599,6 +602,8 @@ namespace clinic.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("InsuranceId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("AppointmentStatus");
 
                     b.Navigation("Booking");
 

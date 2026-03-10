@@ -31,13 +31,13 @@ public class AppointmentQueryService(ClinicDbContext context)
             .Where(a =>
                 a.b.DoctorId == doctorId &&
                 a.b.OnDate.Date == date.Date &&
-                a.a.AppointmentStatus.Id == 1)// [TODO] enums --> a.a.AppointmentStatus.Name == "Scheduled")
+                a.a.AppointmentStatusId == (int)AppointmentStatusEnum.Scheduled)
             .Select(x => new AppointmentSummaryDto
             {
                 AppointmentId = x.a.Id,
                 Date = x.b.OnDate,
                 PatientName = x.p.Name,
-                Status = x.a.AppointmentStatus.Name
+                Status = AppointmentStatusEnum.Scheduled.ToString()
             })
             .AsNoTracking()
             .ToListAsync(ct);

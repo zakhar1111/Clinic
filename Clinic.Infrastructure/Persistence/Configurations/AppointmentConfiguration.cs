@@ -23,7 +23,7 @@ public class AppointmentConfiguration
             .HasForeignKey(a => a.BookingId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne(a => a.AppointmentStatus)
+        builder.HasOne<AppointmentStatus>()
             .WithMany()
             .HasForeignKey(a => a.AppointmentStatusId)
             .OnDelete(DeleteBehavior.Restrict);
@@ -142,8 +142,8 @@ public class AppointmentStatusConfiguration
             .HasMaxLength(50);
 
         builder.HasData(
-                new AppointmentStatus { Id = 1, Name = "Scheduled" },
-                new AppointmentStatus { Id = 2, Name = "Paid" },
+                new AppointmentStatus { Id = 1, Name = "InProgress" },
+                new AppointmentStatus { Id = 2, Name = "Scheduled" },
                 new AppointmentStatus { Id = 3, Name = "Cancelled" },
                 new AppointmentStatus { Id = 4, Name = "Completed" }
         );
