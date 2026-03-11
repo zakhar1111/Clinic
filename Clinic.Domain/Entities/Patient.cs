@@ -19,7 +19,7 @@ public class Patient
             DoctorId = doctorId,
             PatientId = this.Id,
             DurationIn15MinSlots = duration,
-            BookingStatusId = 1 // Scheduled
+            BookingStatusId = (int)BookingStatusEnum.Scheduled  //1 // Scheduled
         };
         Bookings.Add(newBooking);
         return newBooking;

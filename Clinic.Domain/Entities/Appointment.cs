@@ -32,9 +32,9 @@ public class Appointment
         if (price < 0)
             throw new ArgumentOutOfRangeException(nameof(price));
 
-        if (booking.BookingStatusId !=  1) // Confirmed
+        if (booking.BookingStatusId !=  (int) BookingStatusEnum.Scheduled)// 1)    // [TODO] - clarify Confirmed
             throw new InvalidOperationException(
-                "Appointment can only be created from a confirmed booking.");
+                "Appointment can only be created from a scheduled/confirmed booking.");
 
         return new Appointment
         {
@@ -156,18 +156,22 @@ public class Appointment
 
         return payment;
     }
-    public void Start()
+    public void Start() // [TODO] - it might be called from ClinicService BUT for simplicity doctor starts the appointment from AddDiagnostic
     {
-        AppointmentStatusId = (int)AppointmentStatusEnum.InProgress; 
+        AppointmentStatusId = (int)AppointmentStatusEnum.InProgress;
+        if (Booking.BookingStatusId == (int)BookingStatusEnum.Scheduled)
+            Booking.BookingStatusId = (int)BookingStatusEnum.Confirmed;
     }
     public void MarkAsCompleted()
     {
-        AppointmentStatusId = (int)AppointmentStatusEnum.Completed; 
+        AppointmentStatusId = (int)AppointmentStatusEnum.Completed;
+        Booking.BookingStatusId = (int)BookingStatusEnum.Completed;
     }
 
     public void Cancel()
     {
-        AppointmentStatusId = (int)AppointmentStatusEnum.Cancelled; 
+        AppointmentStatusId = (int)AppointmentStatusEnum.Cancelled;
+        Booking.BookingStatusId = (int)BookingStatusEnum.Cancelled;
     }
 
     public Insurance ApplyInsurance(string provider, int coverage)
