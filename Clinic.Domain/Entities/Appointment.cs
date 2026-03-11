@@ -37,7 +37,8 @@ public class Appointment
                 "Appointment can only be created from a confirmed booking.");
 
         return new Appointment
-        { 
+        {
+            BookingId = booking.Id,
             Booking = booking,
             AppointmentStatusId = (int)AppointmentStatusEnum.Scheduled, 
             InsuranceId = insurance?.Id,
