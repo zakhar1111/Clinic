@@ -52,17 +52,11 @@ public class Appointment
 
     public Note AddNote(string content)
     {
-        this.EnsureNotCanceled();
+        EnsureNotCanceled();
         
-        var newNote = new Note
-        {
-            Text = content,
-            CreatedAt = DateTime.UtcNow,
-            AppointmentId = this.Id,
-            Appointment = this
-        };
-
+        var newNote = Note.Create(content, this);
         Notes.Add(newNote);
+
         return newNote;
     }
 
