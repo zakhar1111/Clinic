@@ -11,4 +11,5 @@ public class BookinfAppointmentCommand
     public int DurationInSlots { get; set; }
     public decimal Price { get; set; }
     public string Currency { get; set; }
+    public string Reason { get; set; }
 }

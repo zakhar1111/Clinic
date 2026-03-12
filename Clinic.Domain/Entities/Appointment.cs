@@ -36,6 +36,8 @@ public class Appointment
             throw new InvalidOperationException(
                 "Appointment can only be created from a scheduled/confirmed booking.");
 
+        booking.Confirm(); 
+
         return new Appointment
         {
             BookingId = booking.Id,
@@ -94,20 +96,7 @@ public class Appointment
         Prescriptions.Add(prescription);
         return prescription;
     }
-    private void EnsureInProgress()
-    {
-        if (AppointmentStatusId != (int)AppointmentStatusEnum.InProgress) 
-        {
-            throw new InvalidOperationException(
-                "Operation allowed only when appointment is active = InProgress.");
-        }
-    }
-    private void EnsureNotCanceled()
-    {
-        if (AppointmentStatusId == (int)AppointmentStatusEnum.Cancelled)
-            throw new InvalidOperationException(
-                "Operation not allowed for cancelled appointments.");
-    }
+    
     public Diagnostic AddDiagnostic(string testName, string results)
     {
         if (AppointmentStatusId == (int)AppointmentStatusEnum.Scheduled) // if Scheduled set InProgress to allow adding diagnostics for in progress appointments only
@@ -156,22 +145,28 @@ public class Appointment
 
         return payment;
     }
-    public void Start() // [TODO] - it might be called from ClinicService BUT for simplicity doctor starts the appointment from AddDiagnostic
+    public void Start() 
     {
+        EnsureStatus(AppointmentStatusEnum.Scheduled);
+        Booking.Confirm();
         AppointmentStatusId = (int)AppointmentStatusEnum.InProgress;
-        if (Booking.BookingStatusId == (int)BookingStatusEnum.Scheduled)
-            Booking.BookingStatusId = (int)BookingStatusEnum.Confirmed;
     }
     public void MarkAsCompleted()
     {
+        EnsureStatus(AppointmentStatusEnum.InProgress);
+        Booking.Complete();
         AppointmentStatusId = (int)AppointmentStatusEnum.Completed;
-        Booking.BookingStatusId = (int)BookingStatusEnum.Completed;
     }
 
     public void Cancel()
     {
+        if(AppointmentStatusId == (int)AppointmentStatusEnum.Completed)
+            throw new InvalidOperationException("Completed appointment cannot be canceled.");
+        if(AppointmentStatusId == (int)AppointmentStatusEnum.Cancelled)
+            throw new InvalidOperationException("Appointment is already canceled.");    
+
+        Booking.Canceled();
         AppointmentStatusId = (int)AppointmentStatusEnum.Cancelled;
-        Booking.BookingStatusId = (int)BookingStatusEnum.Cancelled;
     }
 
     public Insurance ApplyInsurance(string provider, int coverage)
@@ -187,4 +182,26 @@ public class Appointment
         Payments.Sum(p => p.Amount);
     public bool IsFullyPaid() =>
         CalculateTotalPayments() >= Price;
+
+    private void EnsureInProgress()
+    {
+        if (AppointmentStatusId != (int)AppointmentStatusEnum.InProgress)
+        {
+            throw new InvalidOperationException(
+                "Operation allowed only when appointment is active = InProgress.");
+        }
+    }
+    private void EnsureNotCanceled()
+    {
+        if (AppointmentStatusId == (int)AppointmentStatusEnum.Cancelled)
+            throw new InvalidOperationException(
+                "Operation not allowed for cancelled appointments.");
+    }
+
+    private void EnsureStatus(AppointmentStatusEnum expected)
+    { 
+        if(AppointmentStatusId != (int) expected)
+            throw new InvalidOperationException(
+                $"Operation allowed only when appointment is in {expected} status.");
+    }
 }

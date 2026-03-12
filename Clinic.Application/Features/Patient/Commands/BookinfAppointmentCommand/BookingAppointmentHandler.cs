@@ -32,7 +32,8 @@ public class BookingAppointmentHandler(
         var newBooking = patient.BookAppontment(
             request.OnDate, 
             request.DoctorId, 
-            request.DurationInSlots
+            request.DurationInSlots,
+            request.Reason
             );
 
         var appointment = Clinic.Domain.Entities.Appointment.Create(
