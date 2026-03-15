@@ -66,53 +66,17 @@ public class Appointment
         string frequency)
     {
         this.EnsureInProgress();
-        
-        if(string.IsNullOrWhiteSpace(medicine))
-            throw new ArgumentException(
-                "Medicine name cannot be empty", nameof(medicine));
-        if (string.IsNullOrWhiteSpace(dosage))
-            throw new ArgumentException(
-                "Dosage cannot be empty", nameof(dosage));
-        if (string.IsNullOrWhiteSpace(frequency))
-            throw new ArgumentException(
-                "Frequency cannot be empty", nameof(frequency));
 
-        var prescription = new Prescription
-        {
-            Medicine = medicine,
-            Dosage = dosage,
-            Frequency = frequency,
-            CreatedAt = DateTime.UtcNow,
-            AppointmentId = this.Id,
-            Appointment = this
-        };
-
+        var prescription = Prescription.Create(medicine, dosage, frequency, this);
         Prescriptions.Add(prescription);
+
         return prescription;
     }
     
     public Diagnostic AddDiagnostic(string testName, string results)
     {
-        if (AppointmentStatusId == (int)AppointmentStatusEnum.Scheduled) // if Scheduled set InProgress to allow adding diagnostics for in progress appointments only
-            Start();
-
-        if (string.IsNullOrWhiteSpace(testName))
-            throw new ArgumentException(
-                "Test name cannot be empty", nameof(testName));
-
-        if (string.IsNullOrWhiteSpace(results))
-            throw new ArgumentException(
-                "Test results cannot be empty", nameof(results));
-
-        EnsureInProgress();
-
-        var newDiagnostic = new Diagnostic
-        {
-            Name = testName,
-            TestResults = results,
-            AppointmentId = this.Id,
-            Appointment = this
-        };
+        EnsureStatus(AppointmentStatusEnum.InProgress);
+        var newDiagnostic = Diagnostic.Create(testName, results, this);
         Diagnostics.Add(newDiagnostic);
         return newDiagnostic;
     }
