@@ -27,6 +27,16 @@ Appointment
  └── Payments
 
 
+ Shift
+   defines working hours
+
+Booking
+   reserves time
+
+Appointment
+   represents confirmed meeting
+
+
  @@@@@@@@@@@@@@@@@@@@@@@@
 
  Your core flow is clean and correct:
@@ -130,8 +140,13 @@ Application layer coordinates, domain layer enforces.
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 🧭 Rule you can keep forever
 
-Aggregates protect invariants
-Handlers orchestrate workflows
+Aggregates 
+    protect invariants
+    enforces rules
+
+Handlers 
+    orchestrate workflows
+
 
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 6️⃣ Relationship between Appointment & Payment status
@@ -160,3 +175,23 @@ Get doctor appointments	GET	/doctors/{id}/appointments?date=
 
 [OK] - add events for creating Users  Doctor, Patient
 [TODO] - add infrastructure for events, messageBox pattern, event handlers, etc.
+
+
+###################################################
+7️⃣ Final Domain Rule
+Appointment.Create() -> Scheduled
+        ↓
+Start() ->InProgress
+        ↓
+MarkAsCompleted() ->Completed
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+3️⃣ Correct State Mapping
+Booking → Appointment relation
+Booking State	Appointment State	Rule
+
+Scheduled	    ❌ none	            appointment not created yet
+Confirmed	    Scheduled	        appointment created
+Cancelled	    Cancelled	        appointment cancelled
+Completed	    Completed	        appointment completed
