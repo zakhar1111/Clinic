@@ -16,7 +16,7 @@ public class AddDoctorSpecialityHandler(IDoctorRepository doctorRepository)
             .GetByIdAsync(request.DoctorId, ct)
             ?? throw new KeyNotFoundException("Doctor not found");
 
-        doctor.AddSpeciality(request.SpecialityId);
+        doctor.AddSpeciality(request.Speciality);
 
         await _doctorRepository.SaveAsync(doctor, ct);
         return doctor.Id;

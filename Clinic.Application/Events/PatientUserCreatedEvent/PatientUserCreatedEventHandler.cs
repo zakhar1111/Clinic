@@ -14,15 +14,14 @@ public class PatientUserCreatedEventHandler(
         PatientUserCreatedEvent @event,
         CancellationToken ct)
     {
-        var patient = new Patient
-        {
-            Name = @event.Name,
-            Email = @event.Email,
-            UserId = @event.UserId,
-            Phone = @event.Phone,
-            DateOfBirth = @event.DateOfBirth,
-            GovId = @event.GovId
-        };
+        var patient = Patient.Create(
+            @event.UserId,
+            @event.Name,
+            @event.DateOfBirth,
+            @event.Phone,
+            @event.Email,
+            @event.GovId
+        );
 
         await _patientRepository.AddAsync(patient, ct);
         await _patientRepository.SaveAsync(patient, ct);

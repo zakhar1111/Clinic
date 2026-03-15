@@ -19,12 +19,12 @@ public class SpecialityConfiguration
             .HasMaxLength(50);
 
         builder.HasData(
-            new Speciality { Id = 1, Name = "Cardiology" },
-            new Speciality { Id = 2, Name = "Dermatology" },
-            new Speciality { Id = 3, Name = "Neurology" },
-            new Speciality { Id = 4, Name = "Pediatrics" },
-            new Speciality { Id = 5, Name = "Psychiatry" },
-            new Speciality { Id = 6, Name = "Family Doctor" }
+            Speciality.Create("Cardiology"),
+            Speciality.Create("Dermatology"),
+            Speciality.Create("Neurology"),
+            Speciality.Create("Pediatrics"),
+            Speciality.Create("Psychiatry"),
+            Speciality.Create("Family Doctor")
         );
     }
 }
