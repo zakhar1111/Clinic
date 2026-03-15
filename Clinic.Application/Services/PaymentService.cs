@@ -7,7 +7,7 @@ public class PaymentService //[TODO] Consider  for clarity  payment orchesration
     public void ProcessPayment(
         Appointment appointment, 
         decimal amount, 
-        int method
+        PayType method//int method
     )
     {
         var payment = appointment.AddPayment(amount, method);

@@ -22,7 +22,7 @@ public class PayForAppointmentHandler(IAppointmentRepository repo)
         // 2. ProcessPayment - domain logic inside aggregate
         var payment = appointment.AddPayment(
                 request.Amount, 
-                request.PayTypeId
+                request.PayType//request.PayTypeId
             );
 
         payment.MarkAuthorized();   // e.g. payment gateway success

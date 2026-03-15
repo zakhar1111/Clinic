@@ -35,7 +35,7 @@ public static class DIExtension
 
         services.AddScoped<IOperationHandler<BookinfAppointmentCommand, int>, BookingAppointmentHandler>();
         services.AddScoped<IOperationHandler<AttachInsuranceCommand, int>, AttachInsuranceHandler>();
-        services.AddScoped<IOperationHandler<AddPaymentCommand, int>, AddPaymentHandler>();
+        //services.AddScoped<IOperationHandler<AddPaymentCommand, int>, AddPaymentHandler>();
 
         services.AddScoped<OperationExecutor>();
 

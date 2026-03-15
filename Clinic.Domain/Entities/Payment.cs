@@ -2,81 +2,91 @@
 
 public class Payment
 {
-    public int Id { get; set; }
+    public int Id { get; private set; }
 
-    public decimal Amount { get; set; }
+    public decimal Amount { get; private set; }
     
-    public DateTime PaidAt { get; set; }
+    public DateTime PaidAt { get; private  set; }
     //public DateTime? RefundedAt { get; set; } [TODO] Add if refund tracking is needed
     //public DateTime CreatedAt { get; set; }   [TODO] Add if creation timestamp is needed
 
-    public int AppointmentId { get; set; }
-    public int PayTypeId { get; set; }
-    public int PayStatusId { get; set; } // State Machine: Created -> Authorized -> Paid/Failed -> Refunded
+    public int AppointmentId { get; private  set; }
+    public int PayTypeId { get; private  set; }
+    public int PayStatusId { get; private set; } // State Machine: Created -> Authorized -> Paid/Failed -> Refunded
 
-    public Appointment Appointment { get; set; }
-    public PayType PayType { get; set; }
-    public PayStatus PayStatus { get; set; }
+    public Appointment Appointment { get; private set; }
+    public PayType PayType { get; private set; }
+    public PayStatus PayStatus { get; private set; }
 
 
-    public Payment() { } // EF
+    private Payment() { } // EF
 
     public static Payment Create(
         decimal amount,
-        int payTypeId,
-        int appointmentId)
+        PayType payType,//int payTypeId,
+        Appointment appointment)//int appointmentId)
     {
         if (amount <= 0)
             throw new ArgumentOutOfRangeException(
                 nameof(amount), "Payment amount must be positive.");
+        if (payType is null)
+            throw new ArgumentException("Invalid payType.");
+        if (appointment is null)
+            throw new ArgumentException("Invalid appointment.");
 
         return new Payment
         {
             Amount = amount,
-            PayTypeId = payTypeId,
-            AppointmentId = appointmentId,
-            PayStatusId = 1 // Created
+            PayTypeId = payType.Id,
+            PayType = payType,
+            AppointmentId = appointment.Id,
+            Appointment = appointment,
+            PayStatusId = (int) PayStatusEnum.Created 
         };
     }
 
     public void MarkAuthorized()
     {
-        EnsureStatus(1);//(PaymentStatuses.Created);
-        PayStatusId = 2;// PaymentStatuses.Authorized;
+        EnsureStatus(PayStatusEnum.Created);
+        PayStatusId = (int)PayStatusEnum.Authorized;
     }
 
     public void MarkPaid()
     {
-        EnsureStatus(2);//(PaymentStatuses.Authorized);
-        PayStatusId = 3;// PaymentStatuses.Paid;
+        EnsureStatus(PayStatusEnum.Authorized);
+        PayStatusId = (int)PayStatusEnum.Paid;
         PaidAt = DateTime.UtcNow;
     }
 
     public void MarkFailed()
     {
         EnsureNotFinal();
-        PayStatusId = 4;// PaymentStatuses.Failed;
+        PayStatusId = (int) PayStatusEnum.Failed;
     }
 
     public void Refund()
     {
-        EnsureStatus(3);//(PaymentStatuses.Paid);
-        PayStatusId = 5;// PaymentStatuses.Refunded;
+        EnsureStatus(PayStatusEnum.Paid);
+        PayStatusId = (int)PayStatusEnum.Refunded;
         //RefundedAt = DateTime.UtcNow;
     }
 
-    private void EnsureStatus(int expected)
+    private void EnsureStatus(PayStatusEnum expected)
     {
-        if (PayStatusId != expected)
+        if (PayStatusId != (int) expected)
             throw new InvalidOperationException(
                 $"Invalid payment transition from status {PayStatusId}");
     }
 
     private void EnsureNotFinal()
     {
-        if (PayStatusId is 3 or 5)
+        //if (PayStatusId is 3 or 5)
+        if (PayStatusId == (int)PayStatusEnum.Paid ||
+            PayStatusId == (int)PayStatusEnum.Refunded)
+        {
             throw new InvalidOperationException(
                 "Payment is already finalized.");
+        }
     }
 
 }

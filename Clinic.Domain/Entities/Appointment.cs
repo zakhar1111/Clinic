@@ -3,21 +3,27 @@ namespace Clinic.Domain.Entities;
 
 public class Appointment
 {
-    public int Id { get; set; }
+    public int Id { get; private  set; }
 
-    public decimal Price { get; set; }
-    public string Currency { get; set; }
+    public decimal Price { get; private set; }
+    public string Currency { get; private  set; }
 
-    public int BookingId { get; set; }
-    public int AppointmentStatusId { get; set; }
-    public int? InsuranceId { get; set; }
+    public int BookingId { get; private set; }
+    public int AppointmentStatusId { get; private set; }
+    public int? InsuranceId { get; private set; }
 
-    public Booking Booking { get; set; }
-    public Insurance? Insurance { get; set; }
-    public List<Note> Notes { get; set; } = new();
-    public List<Prescription> Prescriptions { get; set; } = new();
-    public List<Diagnostic> Diagnostics { get; set; } = new();
-    public List<Payment> Payments { get; set; } = new();
+    public Booking Booking { get; private set; }
+    public Insurance? Insurance { get; private set; }
+    public IReadOnlyCollection<Note> Notes => notes;
+    public IReadOnlyCollection<Prescription> Prescriptions => prescriptions;
+    public IReadOnlyCollection<Diagnostic> Diagnostics  => diagnostics;
+    public IReadOnlyCollection<Payment> Payments => payments;
+
+
+    private readonly List<Note> notes = new();
+    private readonly List<Prescription> prescriptions = new();
+    private readonly List<Diagnostic> diagnostics = new();
+    private readonly List<Payment> payments = new();
 
     public static Appointment Create(
         Booking booking, 
@@ -55,7 +61,7 @@ public class Appointment
         EnsureNotCanceled();
         
         var newNote = Note.Create(content, this);
-        Notes.Add(newNote);
+        notes.Add(newNote);
 
         return newNote;
     }
@@ -68,7 +74,7 @@ public class Appointment
         this.EnsureInProgress();
 
         var prescription = Prescription.Create(medicine, dosage, frequency, this);
-        Prescriptions.Add(prescription);
+        prescriptions.Add(prescription);
 
         return prescription;
     }
@@ -77,29 +83,17 @@ public class Appointment
     {
         EnsureStatus(AppointmentStatusEnum.InProgress);
         var newDiagnostic = Diagnostic.Create(testName, results, this);
-        Diagnostics.Add(newDiagnostic);
+        diagnostics.Add(newDiagnostic);
         return newDiagnostic;
     }
 
-    public Payment AddPayment(decimal amount, int payMethod)
+    public Payment AddPayment(decimal amount, PayType payType)//int payMethod)
     {
         EnsureInProgress();
 
-        if (amount <= 0)
-            throw new ArgumentOutOfRangeException(
-                nameof(amount), "Payment amount must be positive.");
+        var payment = Payment.Create(amount, payType, this);
 
-        var payment = new Payment
-        {
-            Amount = amount,
-            PayTypeId = payMethod,
-            PayStatusId = 1, // Created
-            PaidAt = DateTime.UtcNow,
-            AppointmentId = this.Id,
-            Appointment = this
-        };
-
-        Payments.Add(payment);
+        payments.Add(payment);
 
         return payment;
     }

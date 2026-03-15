@@ -6,6 +6,8 @@ public class Insurance
     public string Provider { get; set; }
     public int Coverage { get; set; }
 
+    private Insurance() { } // EF
+
     public static Insurance Create(
         string provider,
         int coverage
