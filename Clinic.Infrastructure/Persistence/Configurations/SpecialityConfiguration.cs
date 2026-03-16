@@ -19,12 +19,12 @@ public class SpecialityConfiguration
             .HasMaxLength(50);
 
         builder.HasData(
-            Speciality.Create("Cardiology"),
-            Speciality.Create("Dermatology"),
-            Speciality.Create("Neurology"),
-            Speciality.Create("Pediatrics"),
-            Speciality.Create("Psychiatry"),
-            Speciality.Create("Family Doctor")
+            Speciality.Seed(1, "Cardiology"),
+            Speciality.Seed(2, "Dermatology"),
+            Speciality.Seed(3, "Neurology"),
+            Speciality.Seed(4, "Pediatrics"),
+            Speciality.Seed(5, "Psychiatry"),
+            Speciality.Seed(6, "Family Doctor")
         );
     }
 }

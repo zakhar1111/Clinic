@@ -11,12 +11,17 @@ public class PayTypeConfiguration
     {
         builder.HasKey(e => e.Id);
 
-        builder.Property(e => e.Name).IsRequired().HasMaxLength(50);
+        builder.Property(x => x.Id)
+            .ValueGeneratedOnAdd();
+
+        builder.Property(e => e.Name)
+            .IsRequired()
+            .HasMaxLength(50);
 
         builder.HasData(
-            new PayType { Id = 1, Name = "Cash" },
-            new PayType { Id = 2, Name = "Credit Card" },
-            new PayType { Id = 3, Name = "Insurance" }
+            PayType.Seed(1,"Cash"),
+            PayType.Seed(2,"Credit Card"),
+            PayType.Seed(3,"Insurance")
             );
     }
 }
