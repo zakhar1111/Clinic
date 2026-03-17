@@ -9,7 +9,7 @@ public class Appointment
     public string Currency { get; private  set; }
 
     public int BookingId { get; private set; }
-    public int AppointmentStatusId { get; private set; }
+    public AppointmentStatusEnum AppointmentStatusId { get; private set; }
     public int? InsuranceId { get; private set; }
 
     public Booking Booking { get; private set; }
@@ -38,7 +38,7 @@ public class Appointment
         if (price < 0)
             throw new ArgumentOutOfRangeException(nameof(price));
 
-        if (booking.BookingStatusId !=  (int) BookingStatusEnum.Scheduled)// 1)    // [TODO] - clarify Confirmed
+        if (booking.BookingStatusId !=  BookingStatusEnum.Scheduled)  // [TODO] - clarify Confirmed
             throw new InvalidOperationException(
                 "Appointment can only be created from a scheduled/confirmed booking.");
 
@@ -48,7 +48,7 @@ public class Appointment
         {
             BookingId = booking.Id,
             Booking = booking,
-            AppointmentStatusId = (int)AppointmentStatusEnum.Scheduled, 
+            AppointmentStatusId = AppointmentStatusEnum.Scheduled, 
             InsuranceId = insurance?.Id,
             Insurance = insurance,
             Price = price,
@@ -101,24 +101,24 @@ public class Appointment
     {
         EnsureStatus(AppointmentStatusEnum.Scheduled);
         Booking.Confirm();
-        AppointmentStatusId = (int)AppointmentStatusEnum.InProgress;
+        AppointmentStatusId = AppointmentStatusEnum.InProgress;
     }
     public void MarkAsCompleted()
     {
         EnsureStatus(AppointmentStatusEnum.InProgress);
         Booking.Complete();
-        AppointmentStatusId = (int)AppointmentStatusEnum.Completed;
+        AppointmentStatusId = AppointmentStatusEnum.Completed;
     }
 
     public void Cancel()
     {
-        if(AppointmentStatusId == (int)AppointmentStatusEnum.Completed)
+        if(AppointmentStatusId == AppointmentStatusEnum.Completed)
             throw new InvalidOperationException("Completed appointment cannot be canceled.");
-        if(AppointmentStatusId == (int)AppointmentStatusEnum.Cancelled)
+        if(AppointmentStatusId == AppointmentStatusEnum.Cancelled)
             throw new InvalidOperationException("Appointment is already canceled.");    
 
         Booking.Canceled();
-        AppointmentStatusId = (int)AppointmentStatusEnum.Cancelled;
+        AppointmentStatusId = AppointmentStatusEnum.Cancelled;
     }
 
     public Insurance ApplyInsurance(string provider, int coverage)
@@ -137,7 +137,7 @@ public class Appointment
 
     private void EnsureInProgress()
     {
-        if (AppointmentStatusId != (int)AppointmentStatusEnum.InProgress)
+        if (AppointmentStatusId != AppointmentStatusEnum.InProgress)
         {
             throw new InvalidOperationException(
                 "Operation allowed only when appointment is active = InProgress.");
@@ -145,14 +145,14 @@ public class Appointment
     }
     private void EnsureNotCanceled()
     {
-        if (AppointmentStatusId == (int)AppointmentStatusEnum.Cancelled)
+        if (AppointmentStatusId ==  AppointmentStatusEnum.Cancelled)
             throw new InvalidOperationException(
                 "Operation not allowed for cancelled appointments.");
     }
 
     private void EnsureStatus(AppointmentStatusEnum expected)
     { 
-        if(AppointmentStatusId != (int) expected)
+        if(AppointmentStatusId != expected)
             throw new InvalidOperationException(
                 $"Operation allowed only when appointment is in {expected} status.");
     }

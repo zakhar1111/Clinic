@@ -17,6 +17,9 @@ public class AppointmentConfiguration
         builder.Property(a => a.Price).IsRequired().HasColumnType("decimal(18,2)");
         builder.Property(a => a.Currency).IsRequired().HasMaxLength(3);
         builder.Property(a => a.BookingId).IsRequired();
+        builder.Property(a => a.AppointmentStatusId)
+            .HasConversion<int>()
+            .IsRequired();
 
         builder.HasOne(a => a.Booking)
             .WithMany()
