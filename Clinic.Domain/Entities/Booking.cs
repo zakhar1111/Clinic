@@ -8,7 +8,7 @@ public class Booking
     public DateTime OnDate { get; private set; }
     public int DurationIn15MinSlots { get; private set; }  // longevity in slots of 15 minutes for the booking
     public string Reason { get; private set; }
-    public int BookingStatusId { get; private set; }
+    public BookingStatusEnum BookingStatusId { get; private set; }
 
     private Booking() { } // for EF Core
 
@@ -37,7 +37,7 @@ public class Booking
             DoctorId = doctorId,
             PatientId = patientId,
             DurationIn15MinSlots = slotsNumber,
-            BookingStatusId = (int)BookingStatusEnum.Scheduled  //1 // Scheduled
+            BookingStatusId = BookingStatusEnum.Scheduled  //1 // Scheduled
         };
         return newBooking;
     }
@@ -45,27 +45,27 @@ public class Booking
     public void Confirm()
     {
         EnsureStatus(BookingStatusEnum.Scheduled);
-        BookingStatusId = (int)BookingStatusEnum.Confirmed;
+        BookingStatusId = BookingStatusEnum.Confirmed;
     }
 
     public void Complete()
     {
         EnsureStatus(BookingStatusEnum.Confirmed);
-        BookingStatusId = (int)BookingStatusEnum.Completed;
+        BookingStatusId = BookingStatusEnum.Completed;
     }
     public void Canceled()
     { 
-        if(BookingStatusId == (int)BookingStatusEnum.Completed)
+        if(BookingStatusId == BookingStatusEnum.Completed)
             throw new InvalidOperationException("Completed booking cannot be canceled.");
-        if (BookingStatusId == (int)BookingStatusEnum.Cancelled)
+        if (BookingStatusId == BookingStatusEnum.Cancelled)
             throw new InvalidOperationException("Booking is already canceled.");
         
-        BookingStatusId = (int)BookingStatusEnum.Cancelled; 
+        BookingStatusId = BookingStatusEnum.Cancelled; 
     }
 
     private void EnsureStatus(BookingStatusEnum expected)
     {
-        if (BookingStatusId != (int)expected)
+        if (BookingStatusId != expected)
             throw new InvalidOperationException(
                 $"Operation allowed only when Booking is in {expected} status.");
     }

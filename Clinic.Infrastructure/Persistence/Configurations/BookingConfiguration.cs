@@ -18,7 +18,9 @@ public class BookingConfiguration
             .IsRequired();
 
         builder.Property(b => b.BookingStatusId)
+            .HasConversion<int>()
             .IsRequired();
+
         builder.Property(b => b.DurationIn15MinSlots)
             .IsRequired();
 
