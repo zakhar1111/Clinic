@@ -17,8 +17,9 @@ public class AppointmentConfiguration
         builder.Property(a => a.Price).IsRequired().HasColumnType("decimal(18,2)");
         builder.Property(a => a.Currency).IsRequired().HasMaxLength(3);
         builder.Property(a => a.BookingId).IsRequired();
-        builder.Property(a => a.AppointmentStatusId)
+        builder.Property(a => a.Status)
             .HasConversion<int>()
+            .HasColumnName("AppointmentStatusId")
             .IsRequired();
 
         builder.HasOne(a => a.Booking)
@@ -28,7 +29,7 @@ public class AppointmentConfiguration
 
         builder.HasOne<AppointmentStatus>()
             .WithMany()
-            .HasForeignKey(a => a.AppointmentStatusId)
+            .HasForeignKey("AppointmentStatusId")//.HasForeignKey(a => a.AppointmentStatusId)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(a => a.Insurance)
