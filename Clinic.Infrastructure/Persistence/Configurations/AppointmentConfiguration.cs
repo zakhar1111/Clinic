@@ -17,10 +17,8 @@ public class AppointmentConfiguration
         builder.Property(a => a.Price).IsRequired().HasColumnType("decimal(18,2)");
         builder.Property(a => a.Currency).IsRequired().HasMaxLength(3);
         builder.Property(a => a.BookingId).IsRequired();
-        builder.Property(a => a.Status)
-            .HasConversion<int>()
-            .HasColumnName("AppointmentStatusId")
-            .IsRequired();
+        builder.Property(a => a.AppointmentStatusId).IsRequired();
+
 
         builder.HasOne(a => a.Booking)
             .WithMany()
@@ -29,7 +27,7 @@ public class AppointmentConfiguration
 
         builder.HasOne<AppointmentStatus>()
             .WithMany()
-            .HasForeignKey("AppointmentStatusId")//.HasForeignKey(a => a.AppointmentStatusId)
+            .HasForeignKey(a => a.AppointmentStatusId)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(a => a.Insurance)
@@ -146,10 +144,10 @@ public class AppointmentStatusConfiguration
             .HasMaxLength(50);
 
         builder.HasData(
-                new AppointmentStatus { Id = 1, Name = "InProgress" },
-                new AppointmentStatus { Id = 2, Name = "Scheduled" },
-                new AppointmentStatus { Id = 3, Name = "Cancelled" },
-                new AppointmentStatus { Id = 4, Name = "Completed" }
+                AppointmentStatus.Seed(1, "InProgress" ),
+                AppointmentStatus.Seed(2, "Scheduled"),
+                AppointmentStatus.Seed(3, "Cancelled"),
+                AppointmentStatus.Seed(4, "Completed")
         );
     }
 }

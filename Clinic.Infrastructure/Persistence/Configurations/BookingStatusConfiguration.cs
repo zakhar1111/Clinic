@@ -16,10 +16,10 @@ public class BookingStatusConfiguration
             .HasMaxLength(50);
 
         builder.HasData(
-            new BookingStatus { Id = 1, Name = "Scheduled" },
-            new BookingStatus { Id = 2, Name = "Confirmed" },
-            new BookingStatus { Id = 3, Name = "Canceled" },
-            new BookingStatus { Id = 4, Name = "Completed" }
+            BookingStatus.Seed(1, "Scheduled"),
+            BookingStatus.Seed(2, "Confirmed"),
+            BookingStatus.Seed(3, "Canceled"),
+            BookingStatus.Seed(4, "Completed")  
         );
     }
 }

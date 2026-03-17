@@ -8,7 +8,7 @@ public class Booking
     public DateTime OnDate { get; private set; }
     public int DurationIn15MinSlots { get; private set; }  // longevity in slots of 15 minutes for the booking
     public string Reason { get; private set; }
-    public BookingStatusEnum Status { get; private set; }
+    public int BookingStatusId { get; private set; }
 
     private Booking() { } // for EF Core
 
@@ -37,7 +37,7 @@ public class Booking
             DoctorId = doctorId,
             PatientId = patientId,
             DurationIn15MinSlots = slotsNumber,
-            Status = BookingStatusEnum.Scheduled  //1 // Scheduled
+            BookingStatusId = (int) BookingStatusEnum.Scheduled  //1 // Scheduled
         };
         return newBooking;
     }
@@ -45,27 +45,27 @@ public class Booking
     public void Confirm()
     {
         EnsureStatus(BookingStatusEnum.Scheduled);
-        Status = BookingStatusEnum.Confirmed;
+        BookingStatusId = (int) BookingStatusEnum.Confirmed;
     }
 
     public void Complete()
     {
         EnsureStatus(BookingStatusEnum.Confirmed);
-        Status = BookingStatusEnum.Completed;
+        BookingStatusId = (int) BookingStatusEnum.Completed;
     }
     public void Canceled()
     { 
-        if(Status == BookingStatusEnum.Completed)
+        if(BookingStatusId == (int) BookingStatusEnum.Completed)
             throw new InvalidOperationException("Completed booking cannot be canceled.");
-        if (Status == BookingStatusEnum.Cancelled)
+        if (BookingStatusId == (int) BookingStatusEnum.Cancelled)
             throw new InvalidOperationException("Booking is already canceled.");
         
-        Status = BookingStatusEnum.Cancelled; 
+        BookingStatusId = (int) BookingStatusEnum.Cancelled; 
     }
 
     private void EnsureStatus(BookingStatusEnum expected)
     {
-        if (Status != expected)
+        if (BookingStatusId != (int) expected)
             throw new InvalidOperationException(
                 $"Operation allowed only when Booking is in {expected} status.");
     }

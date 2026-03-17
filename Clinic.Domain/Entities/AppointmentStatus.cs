@@ -2,8 +2,12 @@
 
 public class AppointmentStatus
 {
-    public int Id { get; set; }
-    public string Name { get; set; }
+    public int Id { get; private set; }
+    public string Name { get; private set; }
+
+    private AppointmentStatus() { }
+    public static AppointmentStatus Seed(int id, string name)
+        => new AppointmentStatus { Id = id, Name = name };
 }
 public enum AppointmentStatusEnum
 {

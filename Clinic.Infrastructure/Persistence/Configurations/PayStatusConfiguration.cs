@@ -14,11 +14,11 @@ public class PayStatusConfiguration
         builder.Property(e => e.Name).IsRequired().HasMaxLength(50);
 
         builder.HasData(
-            new PayStatus { Id = 1, Name = "Created" },
-            new PayStatus { Id = 2, Name = "Authorized" },
-            new PayStatus { Id = 3, Name = "Paid" },
-            new PayStatus { Id = 4, Name = "Failed" },
-            new PayStatus { Id = 5, Name = "Refunded" }
+            PayStatus.Seed(1, "Created") ,
+            PayStatus.Seed(2, "Authorized" ),
+            PayStatus.Seed(3, "Paid" ),
+            PayStatus.Seed(4, "Failed" ),
+            PayStatus.Seed(5, "Refunded")
         );
     }
 }

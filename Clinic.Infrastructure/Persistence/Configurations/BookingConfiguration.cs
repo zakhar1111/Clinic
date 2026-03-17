@@ -17,10 +17,7 @@ public class BookingConfiguration
         builder.Property(b => b.OnDate)
             .IsRequired();
 
-        builder.Property(b => b.Status)
-            .HasConversion<int>()
-            .HasColumnName("BookingStatusId")
-            .IsRequired();
+        builder.Property(b => b.BookingStatusId).IsRequired();
 
         builder.Property(b => b.DurationIn15MinSlots)
             .IsRequired();
@@ -29,9 +26,10 @@ public class BookingConfiguration
             .WithMany(p => p.Bookings)
             .HasForeignKey(b => b.PatientId)
             .OnDelete(DeleteBehavior.Restrict);
+
         builder.HasOne<BookingStatus>()
             .WithMany()
-            .HasForeignKey("BookingStatusId")//.HasForeignKey(b => b.BookingStatusId)
+            .HasForeignKey(b => b.BookingStatusId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }
