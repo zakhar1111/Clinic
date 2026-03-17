@@ -38,7 +38,7 @@ public class Appointment
         if (price < 0)
             throw new ArgumentOutOfRangeException(nameof(price));
 
-        if (booking.BookingStatusId !=  BookingStatusEnum.Scheduled)  // [TODO] - clarify Confirmed
+        if (booking.Status !=  BookingStatusEnum.Scheduled)  // [TODO] - clarify Confirmed
             throw new InvalidOperationException(
                 "Appointment can only be created from a scheduled/confirmed booking.");
 
