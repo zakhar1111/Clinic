@@ -21,6 +21,10 @@ public class PaymentConfiguration
         builder.Property(p => p.PaidAt)
             .IsRequired();
 
+        builder.Property(p => p.PayStatusId)
+            .HasConversion<int>()
+            .IsRequired();
+
         builder.HasOne(p => p.Appointment)
             .WithMany(a => a.Payments)
             .HasForeignKey(p => p.AppointmentId)
@@ -31,7 +35,7 @@ public class PaymentConfiguration
             .HasForeignKey(p => p.PayTypeId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne(p => p.PayStatus)
+        builder.HasOne<PayStatus>()//(p => p.PayStatus)
             .WithMany()
             .HasForeignKey(p => p.PayStatusId)
             .OnDelete(DeleteBehavior.Restrict);
