@@ -22,21 +22,6 @@ public class PaymentConfiguration
             .IsRequired();
         builder.Property(p => p.PayStatusId).IsRequired();
 
-        //builder.Property(p => p.Status)       //shadow prop + conversion ==> does not work
-        //    .HasConversion<int>()
-        //    .HasColumnName("PayStatusId")
-        //    .IsRequired();
-
-        //builder.Property<int>("PayStatusId");
-
-        //builder.Property(x => x.Status)       //shadow prop + convertor + conversion ==> does not work
-        //   .HasConversion(
-        //       v => v.Value,                  // → DB (int)
-        //       v => (PayStatusId)v           // ← DB
-        //   )
-        //   .HasColumnName("PayStatusId")
-        //   .IsRequired();
-
         builder.HasOne(p => p.Appointment)
             .WithMany(a => a.Payments)
             .HasForeignKey(p => p.AppointmentId)
@@ -47,9 +32,9 @@ public class PaymentConfiguration
             .HasForeignKey(p => p.PayTypeId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne<PayStatus>()//(p => p.PayStatus)
+        builder.HasOne<PayStatus>()
             .WithMany()
-            .HasForeignKey(p => p.PayStatusId)//.HasForeignKey(p => p.Status)//("Status")
+            .HasForeignKey(p => p.PayStatusId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

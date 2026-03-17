@@ -195,3 +195,8 @@ Scheduled	    ❌ none	            appointment not created yet
 Confirmed	    Scheduled	        appointment created
 Cancelled	    Cancelled	        appointment cancelled
 Completed	    Completed	        appointment completed
+
+
+1) DB-level protection (CHECK constraints) → guards data integrity
+2) Domain-level FSM (State Pattern)       → guards behavior
+

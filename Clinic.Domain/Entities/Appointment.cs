@@ -38,7 +38,7 @@ public class Appointment
         if (price < 0)
             throw new ArgumentOutOfRangeException(nameof(price));
 
-        if (booking.BookingStatusId !=  (int) BookingStatusEnum.Scheduled)  // [TODO] - clarify Confirmed
+        if (booking.BookingStatusId !=  (int) BookingStatusEnum.Scheduled)  
             throw new InvalidOperationException(
                 "Appointment can only be created from a scheduled/confirmed booking.");
 
@@ -87,7 +87,7 @@ public class Appointment
         return newDiagnostic;
     }
 
-    public Payment AddPayment(decimal amount, PayType payType)//int payMethod)
+    public Payment AddPayment(decimal amount, PayType payType)
     {
         EnsureInProgress();
 

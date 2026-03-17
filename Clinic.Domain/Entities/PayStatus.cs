@@ -18,23 +18,3 @@ public enum PayStatusEnum
     Failed = 4,
     Refunded = 5
 }
-
-//public readonly record struct PayStatusId
-//{
-//    public int Value { get; }
-
-//    private PayStatusId(int value)
-//    {
-//        Value = value;
-//    }
-
-//    public static PayStatusId FromEnum(PayStatusEnum status)
-//        => new((int)status);
-
-//    public PayStatusEnum ToEnum()
-//        => (PayStatusEnum)Value;
-
-//    public static implicit operator int(PayStatusId id) => id.Value;
-//    public static explicit operator PayStatusId(int value) => new(value);
-//}
-
