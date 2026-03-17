@@ -9,5 +9,4 @@ public class AddDoctorSpecialityCommand
     public int DoctorId { get; set; }
 
     public Speciality Speciality { get; set; } = null!;
-    //public int SpecialityId { get; set; }
 }
