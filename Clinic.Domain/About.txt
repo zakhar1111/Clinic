@@ -200,3 +200,37 @@ Completed	    Completed	        appointment completed
 1) DB-level protection (CHECK constraints) → guards data integrity
 2) Domain-level FSM (State Pattern)       → guards behavior
 
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+solution where 
+ Payment entity has shadow property PayStatusId 
+ Payment domain class has PayStatusEnum which is not mapped onto DB 
+ every time when status changed raised event to update shadow property of Payment Entity
+
+🧠 Key DDD Principle Violated
+Aggregate must be internally consistent immediately
+
+after any state change. This means that the domain model 
+- should not allow for an inconsistent state at any point in time. 
+If the Payment entity has a shadow property PayStatusId 
+that is not directly mapped to the domain class, 
+it can lead to situations where the domain model 
+- is out of sync with the database state, 
+especially if events are raised to update 
+the shadow property without proper synchronization.
+Pros of this design:
+1. Separation of Concerns: The domain class can focus on business logic and behavior, while the shadow property can handle database-specific concerns.
+2. Flexibility: The shadow property allows for more flexible database schema design without affecting the domain model.
+3. Performance: In some cases, using shadow properties can improve performance by reducing the number of mapped properties in the domain class.
+Cons of this design:
+1. Complexity: Managing the synchronization between the domain model and the shadow property can add complexity to the codebase, especially when raising events to update the shadow property.
+2. Inconsistency Risk: There is a risk of the domain model and the shadow property becoming inconsistent if events are not handled correctly or if there are delays in updating the shadow property.
+3. Testing Challenges: It can be more difficult to test the domain logic when it relies on shadow properties that are not directly accessible in the domain class.
+
+
+solution where 
+ Payment entity has shadow property PayStatusId 
+ Payment domain class has PayStatusEnum which is not mapped onto DB 
+ every time when status changed raised event to update shadow property of Payment Entity
+
+ explain pros and cons for this design
