@@ -7,6 +7,7 @@ public class AddDoctorSpecialityCommand
     : IRequest<int>
 {
     public int DoctorId { get; set; }
-
-    public Speciality Speciality { get; set; } = null!;
+    public int SpecialityId { get; set; }
 }
+
+public record SpecialityDto(int Id, string Name);
