@@ -6,8 +6,8 @@ public class Doctor
     public int Id { get; private set; }
     public string UserId { get; private set; } 
     public string Name { get; private set; }
-    public string Phone { get; private set; } = string.Empty;
-    public string Email { get; private set; } = string.Empty;
+    public Phone Phone { get; private set; }//public string Phone { get; private set; } = string.Empty;
+    public Email Email { get; private set; } //public string Email { get; private set; } 
     public string Bio { get; private set; } = string.Empty;
 
     public IReadOnlyCollection<Booking> Bookings => bookings;
@@ -58,8 +58,8 @@ public class Doctor
         return new Doctor
         {
             Name = name,
-            Phone = phone ?? string.Empty,
-            Email = email ?? string.Empty,
+            Phone = Phone.Create(phone), //phone ?? string.Empty,
+            Email = Email.Create(email),//email ?? string.Empty,
             Bio = bio ?? string.Empty,
             UserId = userId
         };

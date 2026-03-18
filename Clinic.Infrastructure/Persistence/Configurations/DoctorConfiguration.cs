@@ -1,4 +1,5 @@
 ﻿using Clinic.Domain.Entities;
+using Clinic.Infrastructure.Persistence.Convertors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -23,10 +24,12 @@ public class DoctorConfiguration
             .HasMaxLength(50);
 
         builder.Property(d => d.Email)
+            .HasConversion<EmailConverter>()
             .IsRequired()
             .HasMaxLength(50);  
 
         builder.Property(d => d.Phone)
+            .HasConversion<PhoneConverter>()  
             .IsRequired()
             .HasMaxLength(15);
 

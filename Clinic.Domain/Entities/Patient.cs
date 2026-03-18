@@ -6,9 +6,9 @@ public class Patient
     public string UserId { get; private set; } 
     public string Name { get; private set; }
     public DateTime DateOfBirth { get; private set; }
-    public string Phone { get; private set; } = string.Empty;
-    public string Email { get; private set; } = string.Empty;
-    public string GovId { get; private set; }
+    public Phone Phone { get; private set; } //public string Phone { get; private set; }
+    public Email Email { get; private set; } //public string Email { get; private set; } 
+    public GovId GovId { get; private set; }//public string GovId { get; private set; }
 
     public IReadOnlyCollection<Booking> Bookings => bookings;
 
@@ -48,21 +48,21 @@ public class Patient
             throw new ArgumentException("Name is required.", nameof(name));
         if (dateOfBirth >= DateTime.Now)
             throw new ArgumentException("Date of birth must be in the past.", nameof(dateOfBirth));
-        if (string.IsNullOrWhiteSpace(phone))
-            throw new ArgumentException("Phone is required.", nameof(phone));
-        if (string.IsNullOrWhiteSpace(email))
-            throw new ArgumentException("Email is required.", nameof(email));
-        if (string.IsNullOrWhiteSpace(govId))
-            throw new ArgumentException("GovId is required.", nameof(govId));
+        //if (string.IsNullOrWhiteSpace(phone))
+        //    throw new ArgumentException("Phone is required.", nameof(phone));
+        //if (string.IsNullOrWhiteSpace(email))
+        //    throw new ArgumentException("Email is required.", nameof(email));
+        //if (string.IsNullOrWhiteSpace(govId))
+        //    throw new ArgumentException("GovId is required.", nameof(govId));
 
         return new Patient
         {
             UserId = userId,
             Name = name,
             DateOfBirth = dateOfBirth,
-            Phone = phone,
-            Email = email,
-            GovId = govId
+            Phone = Phone.Create(phone),//phone
+            Email = Email.Create(email),//email,
+            GovId = GovId.Create(govId)//govId
         };
     }
 
