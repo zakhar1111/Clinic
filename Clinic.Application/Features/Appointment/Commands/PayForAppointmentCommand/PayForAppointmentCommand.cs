@@ -8,5 +8,8 @@ public class PayForAppointmentCommand
 {
     public int AppointmentId { get; set; }
     public decimal Amount { get; set; }
-    public PayType PayType { get; set; }
+    public int PayTypeId { get; set; }
+
 }
+
+public record PayTypeDto(int Id, string Name);

@@ -40,6 +40,7 @@ public static class DIExtensions
 
         services.AddScoped<IAppointmentQueryService, AppointmentQueryService>();
         services.AddScoped<IDoctorAvailabilityService, DoctorAvailabilityService>();
+        services.AddScoped<IPayTypeQueryService, PayTypeQueryService>();
 
         services.AddScoped<IntegrationEventDispatcher>();
         return services;
