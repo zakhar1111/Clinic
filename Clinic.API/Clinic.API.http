@@ -3,10 +3,10 @@
 
 ################# DOCTOR #################
 ### Get doctor availability slots
-GET {{Clinic.API_HostAddress}}/doctors/1/available-slots?date=2026-04-06
+GET {{Clinic.API_HostAddress}}/doctors/1/available-slots?date=2026-04-08
 
 ### Get doctors appointments
-GET {{Clinic.API_HostAddress}}/doctors/1/appointments?date=2026-04-06
+GET {{Clinic.API_HostAddress}}/doctors/1/appointments?date=2026-04-08
 
 ### AddDoctorShiftCommand 
 POST {{Clinic.API_HostAddress}}/doctors/1/shifts
@@ -15,7 +15,7 @@ Content-Type: application/json
 {
   "startTime": "09:00:00",
   "slot15Min": 20,
-  "day": "2026-04-06"
+  "day": "2026-04-07"
 }
 
 ### AddDoctorSpecialityCommand
@@ -37,57 +37,57 @@ Content-Type: application/json
   "doctorId": 1,
   "onDate": "2026-04-08T09:00:00",
   "durationInSlots": 2,
-  "price": 120,
+  "price": 220,
   "currency": "USD",
-  "reason": "Regular check-up"
+  "reason": "Health check-up"
 }
 
 ################# APPOINTMENT #################
 ### PayForAppointmentCommand
-POST {{Clinic.API_HostAddress}}/appointments/5/payments
+POST {{Clinic.API_HostAddress}}/appointments/6/payments
 Content-Type: application/json
 {
   "appointmentId": 5,
-  "amount": 120,
+  "amount": 220,
   "payTypeId": 2
 }
 ### GetAppointmentByDateQuery
 GET {{Clinic.API_HostAddress}}/doctors/1/appointments?date=2026-04-08
 
 ### AttachInsuranceCommand
-POST {{Clinic.API_HostAddress}}/appointments/5/insurance
+POST {{Clinic.API_HostAddress}}/appointments/6/insurance
 Content-Type: application/json
 {
-  "appointmentId": 5,
-  "provider": "School standard ",
+  "appointmentId": 6,
+  "provider": "Garrage standard ",
   "coverage": 100
 }
 
 ### AddDiagnosticCommand
-POST {{Clinic.API_HostAddress}}/appointments/5/diagnostics
+POST {{Clinic.API_HostAddress}}/appointments/6/diagnostics
 Content-Type: application/json
 {
-  "appointmentId": 5,
-  "testName": "tonometer",
-  "result": "blood pressure normal"
+  "appointmentId": 6,
+  "testName": "boold test",
+  "result": " n a"
 }
 
 ### AddNoteCommand
-POST {{Clinic.API_HostAddress}}/appointments/5/notes
+POST {{Clinic.API_HostAddress}}/appointments/6/notes
 Content-Type: application/json
 {
-  "appointmentId": 5,
-  "content": "Patient had normal blood pressure."
+  "appointmentId": 6,
+  "content": "Patient has 6 7 tallmess."
 }
 
 ### AddPrescriptionCommand
-POST {{Clinic.API_HostAddress}}/appointments/5/prescriptions
+POST {{Clinic.API_HostAddress}}/appointments/6/prescriptions
 Content-Type: application/json
 {
-  "appointmentId": 5,
+  "appointmentId": 6,
   "doctorId": 1,
-  "medication": "Lisinopril",
-  "dosage": "10mg once daily",
-  "instructions": "take till the end"
+  "medication": "n a",
+  "dosage": "n a",
+  "instructions": "n a"
 }
 
