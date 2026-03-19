@@ -25,9 +25,11 @@ public class AppointmentRepository(ClinicDbContext context)
     public async Task<Appointment?> GetByIdAsync(int id, CancellationToken ct) =>
         await _context
             .Set<Appointment>()
+            .Include(a => a.Booking)
             .Include(a => a.Payments)
             .Include(a => a.Prescriptions)
             .Include(a => a.Diagnostics)
             .Include(a => a.Notes)
+            .Include(a => a.Insurance)
             .FirstOrDefaultAsync(a => a.Id == id, ct);
 }

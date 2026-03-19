@@ -58,8 +58,9 @@ public class Appointment
 
     public Note AddNote(string content)
     {
-        EnsureNotCanceled();
-        
+        if(AppointmentStatusId != (int)AppointmentStatusEnum.InProgress)
+            throw new InvalidOperationException("Notes can only be added to appointments that are in progress.");
+
         var newNote = Note.Create(content, this);
         notes.Add(newNote);
 
@@ -71,7 +72,8 @@ public class Appointment
         string dosage, 
         string frequency)
     {
-        this.EnsureInProgress();
+        if(AppointmentStatusId != (int)AppointmentStatusEnum.InProgress)
+            throw new InvalidOperationException("Prescriptions can only be added to appointments that are in progress.");
 
         var prescription = Prescription.Create(medicine, dosage, frequency, this);
         prescriptions.Add(prescription);
@@ -81,31 +83,37 @@ public class Appointment
     
     public Diagnostic AddDiagnostic(string testName, string results)
     {
-        EnsureStatus(AppointmentStatusEnum.InProgress);
+        if(AppointmentStatusId != (int)AppointmentStatusEnum.InProgress)
+            throw new InvalidOperationException("Diagnostics can only be added to appointments that are in progress.");
+
         var newDiagnostic = Diagnostic.Create(testName, results, this);
         diagnostics.Add(newDiagnostic);
+
         return newDiagnostic;
     }
 
     public Payment AddPayment(decimal amount, PayType payType)
     {
-        EnsureInProgress();
+        if(AppointmentStatusId != (int)AppointmentStatusEnum.InProgress)
+            throw new InvalidOperationException("Payments can only be added to appointments that are in progress.");
 
         var payment = Payment.Create(amount, payType, this);
-
         payments.Add(payment);
 
         return payment;
     }
     public void Start() 
     {
-        EnsureStatus(AppointmentStatusEnum.Scheduled);
-        Booking.Confirm();
+        if(AppointmentStatusId != (int)AppointmentStatusEnum.Scheduled)
+            throw new InvalidOperationException("Only scheduled appointment can be started.");
+        
         AppointmentStatusId = (int)AppointmentStatusEnum.InProgress;
     }
     public void MarkAsCompleted()
     {
-        EnsureStatus(AppointmentStatusEnum.InProgress);
+        if(AppointmentStatusId != (int)AppointmentStatusEnum.InProgress)
+            throw new InvalidOperationException("Only in progress appointment can be completed.");
+
         Booking.Complete();
         AppointmentStatusId = (int)AppointmentStatusEnum.Completed;
     }
@@ -123,10 +131,12 @@ public class Appointment
 
     public Insurance ApplyInsurance(string provider, int coverage)
     {
-        this.EnsureNotCanceled();
+        if(AppointmentStatusId == (int)AppointmentStatusEnum.Cancelled)
+            throw new InvalidOperationException("Cannot apply insurance to a cancelled appointment.");
 
         Insurance = Insurance.Create(provider, coverage);
         InsuranceId = Insurance.Id;
+
         return Insurance;
     }
 
@@ -134,26 +144,4 @@ public class Appointment
         Payments.Sum(p => p.Amount);
     public bool IsFullyPaid() =>
         CalculateTotalPayments() >= Price;
-
-    private void EnsureInProgress()
-    {
-        if (AppointmentStatusId != (int)AppointmentStatusEnum.InProgress)
-        {
-            throw new InvalidOperationException(
-                "Operation allowed only when appointment is active = InProgress.");
-        }
-    }
-    private void EnsureNotCanceled()
-    {
-        if (AppointmentStatusId ==  (int)AppointmentStatusEnum.Cancelled)
-            throw new InvalidOperationException(
-                "Operation not allowed for cancelled appointments.");
-    }
-
-    private void EnsureStatus(AppointmentStatusEnum expected)
-    { 
-        if(AppointmentStatusId != (int)expected)
-            throw new InvalidOperationException(
-                $"Operation allowed only when appointment is in {expected} status.");
-    }
 }

@@ -12,7 +12,7 @@ public class PayForAppointmentHandler(
     : IOperationHandler<PayForAppointmentCommand, int>
 {
     private readonly IAppointmentRepository _repo = repo;
-    private readonly IPayTypeQueryService _service;
+    private readonly IPayTypeQueryService _service = service;
 
     public async Task<int> HandleAsync(
         PayForAppointmentCommand request, 

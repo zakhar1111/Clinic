@@ -37,20 +37,25 @@ public class Booking
             DoctorId = doctorId,
             PatientId = patientId,
             DurationIn15MinSlots = slotsNumber,
-            BookingStatusId = (int) BookingStatusEnum.Scheduled  //1 // Scheduled
+            BookingStatusId = (int) BookingStatusEnum.Scheduled,
+            Reason = reason
         };
         return newBooking;
     }
 
     public void Confirm()
     {
-        EnsureStatus(BookingStatusEnum.Scheduled);
+        if(BookingStatusId != (int)BookingStatusEnum.Scheduled)
+            throw new InvalidOperationException("Only scheduled booking can be confirmed.");
+
         BookingStatusId = (int) BookingStatusEnum.Confirmed;
     }
 
     public void Complete()
     {
-        EnsureStatus(BookingStatusEnum.Confirmed);
+        if(BookingStatusId != (int)BookingStatusEnum.Confirmed)
+            throw new InvalidOperationException("Only confirmed booking can be completed.");
+        
         BookingStatusId = (int) BookingStatusEnum.Completed;
     }
     public void Canceled()
@@ -62,13 +67,4 @@ public class Booking
         
         BookingStatusId = (int) BookingStatusEnum.Cancelled; 
     }
-
-    private void EnsureStatus(BookingStatusEnum expected)
-    {
-        if (BookingStatusId != (int) expected)
-            throw new InvalidOperationException(
-                $"Operation allowed only when Booking is in {expected} status.");
-    }
-
-    
 }

@@ -17,7 +17,7 @@ public class Note
     {
         if (string.IsNullOrWhiteSpace(text))
             throw new ArgumentException("Note text cannot be empty.");
-        if (appointment is not null)
+        if (appointment is null)
             throw new ArgumentException("Invalid appointment.");
 
         return new Note

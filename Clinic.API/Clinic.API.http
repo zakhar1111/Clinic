@@ -3,10 +3,10 @@
 
 ################# DOCTOR #################
 ### Get doctor availability slots
-GET {{Clinic.API_HostAddress}}/doctors/1/available-slots?date=2026-03-06
+GET {{Clinic.API_HostAddress}}/doctors/1/available-slots?date=2026-04-06
 
 ### Get doctors appointments
-GET {{Clinic.API_HostAddress}}/doctors/1/appointments?date=2026-03-06
+GET {{Clinic.API_HostAddress}}/doctors/1/appointments?date=2026-04-06
 
 ### AddDoctorShiftCommand 
 POST {{Clinic.API_HostAddress}}/doctors/1/shifts
@@ -15,22 +15,18 @@ Content-Type: application/json
 {
   "startTime": "09:00:00",
   "slot15Min": 20,
-  "day": "2026-03-06"
+  "day": "2026-04-06"
 }
 
 ### AddDoctorSpecialityCommand
 POST {{Clinic.API_HostAddress}}/doctors/1/specialities
+Content-Type: application/json
 {
   "doctorId": 1,
-  "specialityId": 1
-}
-
-### AddDoctorSpecialityCommand
-POST {{Clinic.API_HostAddress}}/doctors/2/specialities
-{
-  "doctorId": 2,
   "specialityId": 2
 }
+
+
 
 
 ################# PATIENT #################
@@ -39,57 +35,59 @@ POST {{Clinic.API_HostAddress}}/patients/3/appointments
 Content-Type: application/json
 {
   "doctorId": 1,
-  "onDate": "2026-03-06T09:00:00",
+  "onDate": "2026-04-08T09:00:00",
   "durationInSlots": 2,
   "price": 120,
-  "currency": "USD"
+  "currency": "USD",
+  "reason": "Regular check-up"
 }
 
 ################# APPOINTMENT #################
 ### PayForAppointmentCommand
-POST {{Clinic.API_HostAddress}}/appointments/3/payments
+POST {{Clinic.API_HostAddress}}/appointments/5/payments
 Content-Type: application/json
 {
-  "appointmentId": 3,
+  "appointmentId": 5,
   "amount": 120,
   "payTypeId": 2
 }
 ### GetAppointmentByDateQuery
-GET {{Clinic.API_HostAddress}}/doctors/1/appointments?date=2026-03-06
+GET {{Clinic.API_HostAddress}}/doctors/1/appointments?date=2026-04-08
 
 ### AttachInsuranceCommand
-POST {{Clinic.API_HostAddress}}/appointments/3/insurance
+POST {{Clinic.API_HostAddress}}/appointments/5/insurance
 Content-Type: application/json
 {
-  "appointmentId": 3,
+  "appointmentId": 5,
   "provider": "School standard ",
   "coverage": 100
 }
 
 ### AddDiagnosticCommand
-POST {{Clinic.API_HostAddress}}/appointments/3/diagnostics
+POST {{Clinic.API_HostAddress}}/appointments/5/diagnostics
 Content-Type: application/json
 {
-  "appointmentId": 3,
+  "appointmentId": 5,
   "testName": "tonometer",
-  "result": "High blood pressure fixed"
+  "result": "blood pressure normal"
 }
 
 ### AddNoteCommand
-POST {{Clinic.API_HostAddress}}/appointments/3/notes
+POST {{Clinic.API_HostAddress}}/appointments/5/notes
 Content-Type: application/json
 {
-  "appointmentId": 3,
-  "content": "Patient has high blood pressure, needs to reduce salt intake."
+  "appointmentId": 5,
+  "content": "Patient had normal blood pressure."
 }
 
 ### AddPrescriptionCommand
-POST {{Clinic.API_HostAddress}}/appointments/3/prescriptions
+POST {{Clinic.API_HostAddress}}/appointments/5/prescriptions
 Content-Type: application/json
 {
-  "appointmentId": 3,
+  "appointmentId": 5,
   "doctorId": 1,
   "medication": "Lisinopril",
   "dosage": "10mg once daily",
   "instructions": "take till the end"
 }
+
