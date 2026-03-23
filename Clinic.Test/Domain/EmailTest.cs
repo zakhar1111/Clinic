@@ -3,7 +3,7 @@ using Clinic.Domain.Entities;
 
 namespace Clinic.Test.Domain;
 
-public class EmailTest
+public class EmailTest_Valid
     : BaseTest<string>
 {
     [Theory]
@@ -14,7 +14,7 @@ public class EmailTest
         => RunTest(() => Email.Create(input).Value, expected);
 }
 
-public class Email_Create_Invalid
+public class EmailTest_Invalid
     : BaseTestException
 {
     [Theory]
