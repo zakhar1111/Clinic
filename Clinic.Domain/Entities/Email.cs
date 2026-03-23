@@ -14,7 +14,10 @@ public sealed record Email
             throw new ArgumentException("Invalid email");
         
         var normalized = value.Trim().ToLower();
-        if(!_regex.IsMatch(normalized))
+
+        if (normalized.Contains(".."))
+            throw new ArgumentException("Invalid email format");
+        if (!_regex.IsMatch(normalized))
             throw new ArgumentException("Invalid email format");
 
         return new Email(normalized);
